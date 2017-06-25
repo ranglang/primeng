@@ -1,8 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
+    "outDir": "/Users/rang/udian/angular-webpack2-starter/src/components",
     "baseUrl": "src",
+    "rootDir": "src/app/components",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -16,5 +17,9 @@
       "es2016",
       "dom"
     ]
-  }
+  },
+  "include": [
+    "src/app/components/**/*"
+  ]
 }
+

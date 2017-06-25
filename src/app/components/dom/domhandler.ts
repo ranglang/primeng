@@ -1,31 +1,43 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Renderer2, ElementRef} from '@angular/core';
 
 @Injectable()
 export class DomHandler {
 
+    constructor( public _renderer: Renderer2) {
+
+    }
     public static zindex: number = 1000;
 
     public addClass(element: any, className: string): void {
-        if (element.classList)
-            element.classList.add(className);
-        else
-            element.className += ' ' + className;
+        // if (element.classList)
+        //     element.classList.add(className);
+        // else
+        //     element.className += ' ' + className;
+        this._renderer.addClass(element, className);
     }
 
+  public addSomeClasses(element: ElementRef, className: string): void {
+    let styles: string[] = className.split(' ');
+    for (let i = 0; i < styles.length; i++) {
+      this._renderer.addClass(element, styles[i].trim());
+    }
+  }
     public addMultipleClasses(element: any, className: string): void {
-        if (element.classList) {
-            let styles: string[] = className.split(' ');
-            for (let i = 0; i < styles.length; i++) {
-                element.classList.add(styles[i]);
-            }
 
-        }
-        else {
-            let styles: string[] = className.split(' ');
-            for (let i = 0; i < styles.length; i++) {
+          let styles: string[] = className.split(' ');
+              // element.classList.add(styles[i]);
+            console.log('element classList: ' + element.classList);
+            if (element.classList) {
+              console.log('hasClassList');
+              for (let i = 0; i < styles.length; i++) {
+                this._renderer.addClass(element, styles[i].trim());
+              }
+            } else {
+              console.log('hasNot classList');
+              for (let i = 0; i < styles.length; i++) {
                 element.className += ' ' + styles[i];
+              }
             }
-        }
     }
 
     public removeClass(element: any, className: string): void {
@@ -74,7 +86,7 @@ export class DomHandler {
         let windowScrollTop = this.getWindowScrollTop();
         let viewport = this.getViewport();
         let top, left;
-        
+
         if ((targetOffset.top + targetHeight + elementDimensions.height) > viewport.height) {
             top = -1 * (elementDimensions.height);
             if(targetOffset.top + top < 0) {
@@ -84,8 +96,8 @@ export class DomHandler {
         else {
             top = targetHeight;
         }
-            
-            
+
+
         if ((targetOffset.left + elementDimensions.width) > viewport.width)
             left = targetWidth - elementDimensions.width;
         else
@@ -112,7 +124,7 @@ export class DomHandler {
             if(top < 0) {
                 top = 0 + windowScrollTop;
             }
-        } 
+        }
         else {
             top = targetOuterHeight + targetOffset.top + windowScrollTop;
         }
@@ -209,7 +221,7 @@ export class DomHandler {
                 opacity = 0;
                 clearInterval(fading);
             }
-            
+
             element.style.opacity = opacity;
         }, interval);
     }
@@ -268,7 +280,7 @@ export class DomHandler {
         width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
         return width;
     }
-    
+
     public getInnerHeight(el) {
         let height = el.offsetHeight;
         let style = getComputedStyle(el);
@@ -316,7 +328,7 @@ export class DomHandler {
 
         return { width: w, height: h };
     }
-    
+
     public getOffset(el) {
         let x = el.offsetLeft;
         let y = el.offsetTop;
@@ -358,7 +370,7 @@ export class DomHandler {
         // other browser
         return false;
     }
-    
+
     appendChild(element: any, target: any) {
         if(this.isElement(target))
             target.appendChild(element);
@@ -367,7 +379,7 @@ export class DomHandler {
         else
             throw 'Cannot append ' + target + ' to ' + element;
     }
-    
+
     removeChild(element: any, target: any) {
         if(this.isElement(target))
             target.removeChild(element);
@@ -376,13 +388,13 @@ export class DomHandler {
         else
             throw 'Cannot remove ' + element + ' from ' + target;
     }
-    
+
     isElement(obj: any) {
         return (typeof HTMLElement === "object" ? obj instanceof HTMLElement :
             obj && typeof obj === "object" && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === "string"
         );
     }
-    
+
     calculateScrollbarWidth(): number {
         let scrollDiv = document.createElement("div");
         scrollDiv.className = "ui-scrollbar-measure";
@@ -390,10 +402,10 @@ export class DomHandler {
 
         let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
         document.body.removeChild(scrollDiv);
-        
+
         return scrollbarWidth;
     }
-    
+
     public invokeElementMethod(element: any, methodName: string, args?: any[]): void {
         (element as any)[methodName].apply(element, args);
     }
