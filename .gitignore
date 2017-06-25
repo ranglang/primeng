@@ -38,6 +38,7 @@ testem.log
 
 # themes
 /src/assets/components/themes/**/*.css
+/src/app/components/**/**ngfactory.ts
 /src/assets/components/themes/**/*.map
 !/src/assets/components/themes/bootstrap/theme.css
 
@@ -48,3 +49,72 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+src/app/components/**/**.ngfactory.ts
+src/app/components/accordion/accordion.ngfactory.ts
+        src/app/components/autocomplete/autocomplete.ngfactory.ts
+        src/app/components/blockui/blockui.ngfactory.ts
+        src/app/components/breadcrumb/breadcrumb.ngfactory.ts
+        src/app/components/button/button.ngfactory.ts
+        src/app/components/calendar/calendar.ngfactory.ts
+        src/app/components/captcha/captcha.ngfactory.ts
+        src/app/components/carousel/carousel.ngfactory.ts
+        src/app/components/chart/chart.ngfactory.ts
+        src/app/components/checkbox/checkbox.ngfactory.ts
+        src/app/components/chips/chips.ngfactory.ts
+        src/app/components/codehighlighter/codehighlighter.ngfactory.ts
+        src/app/components/common/shared.ngfactory.ts
+        src/app/components/confirmdialog/confirmdialog.ngfactory.ts
+        src/app/components/contextmenu/contextmenu.ngfactory.ts
+        src/app/components/datagrid/datagrid.ngfactory.ts
+        src/app/components/datalist/datalist.ngfactory.ts
+        src/app/components/datascroller/datascroller.ngfactory.ts
+        src/app/components/datatable/datatable.ngfactory.ts
+        src/app/components/defer/defer.ngfactory.ts
+        src/app/components/dialog/dialog.ngfactory.ts
+        src/app/components/dragdrop/dragdrop.ngfactory.ts
+        src/app/components/dropdown/dropdown.ngfactory.ts
+        src/app/components/editor/editor.ngfactory.ts
+        src/app/components/fieldset/fieldset.ngfactory.ts
+        src/app/components/fileupload/fileupload.ngfactory.ts
+        src/app/components/galleria/galleria.ngfactory.ts
+        src/app/components/gmap/gmap.ngfactory.ts
+        src/app/components/growl/growl.ngfactory.ts
+        src/app/components/inplace/inplace.ngfactory.ts
+        src/app/components/inputmask/inputmask.ngfactory.ts
+        src/app/components/inputswitch/inputswitch.ngfactory.ts
+        src/app/components/inputtext/inputtext.ngfactory.ts
+        src/app/components/inputtextarea/inputtextarea.ngfactory.ts
+        src/app/components/lightbox/lightbox.ngfactory.ts
+        src/app/components/listbox/listbox.ngfactory.ts
+        src/app/components/megamenu/megamenu.ngfactory.ts
+        src/app/components/menu/menu.ngfactory.ts
+        src/app/components/menubar/menubar.ngfactory.ts
+        src/app/components/messages/messages.ngfactory.ts
+        src/app/components/multiselect/multiselect.ngfactory.ts
+        src/app/components/orderlist/orderlist.ngfactory.ts
+        src/app/components/organizationchart/organizationchart.ngfactory.ts
+        src/app/components/overlaypanel/overlaypanel.ngfactory.ts
+        src/app/components/paginator/paginator.ngfactory.ts
+        src/app/components/panel/panel.ngfactory.ts
+        src/app/components/panelmenu/panelmenu.ngfactory.ts
+        src/app/components/password/password.ngfactory.ts
+        src/app/components/progressbar/progressbar.ngfactory.ts
+        src/app/components/radiobutton/radiobutton.ngfactory.ts
+        src/app/components/rating/rating.ngfactory.ts
+        src/app/components/schedule/schedule.ngfactory.ts
+        src/app/components/selectbutton/selectbutton.ngfactory.ts
+        src/app/components/slidemenu/slidemenu.ngfactory.ts
+        src/app/components/slider/slider.ngfactory.ts
+        src/app/components/spinner/spinner.ngfactory.ts
+        src/app/components/steps/steps.ngfactory.ts
+        src/app/components/tabmenu/tabmenu.ngfactory.ts
+        src/app/components/tabview/tabview.ngfactory.ts
+        src/app/components/terminal/terminal.ngfactory.ts
+        src/app/components/tieredmenu/tieredmenu.ngfactory.ts
+        src/app/components/togglebutton/togglebutton.ngfactory.ts
+        src/app/components/toolbar/toolbar.ngfactory.ts
+        src/app/components/tooltip/tooltip.ngfactory.ts
+        src/app/components/tree/tree.ngfactory.ts
+        src/app/components/treetable/treetable.ngfactory.ts
+        src/app/components/tristatecheckbox/tristatecheckbox.ngfactory.ts
+
