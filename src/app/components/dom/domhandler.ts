@@ -65,6 +65,7 @@ export class DomHandler {
     }
 
     public findSingle(element: any, selector: string): any {
+
         return element.querySelector(selector);
     }
 

@@ -29,6 +29,8 @@ export class Button implements AfterViewInit, OnDestroy {
   public _icon: string;
 
   public initialized: boolean;
+  private span: ElementRef;
+  private icon_span: ElementRef;
 
   constructor(public el: ElementRef, public domHandler: DomHandler, public _renderer2: Renderer2,
               private _platform: Platform) {
@@ -37,11 +39,20 @@ export class Button implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.domHandler.addMultipleClasses(this.el.nativeElement, this.getStyleClass())
     let a = this._renderer2.createText(this.label || 'ui-btn');
-    let labelElement = this._renderer2.createElement('span');
-    this.domHandler.addSomeClasses(labelElement, 'ui-button-text ui-c');
-    this._renderer2.appendChild(labelElement, a);
 
-    this._renderer2.appendChild(this.el.nativeElement, labelElement);
+    if(this.icon) {
+      // let iconElement = document.createElement("span");
+      this.icon_span = this._renderer2.createElement('span');
+      let iconPosClass = (this.iconPos == 'right') ? 'ui-button-icon-right': 'ui-button-icon-left';
+      this.domHandler.addSomeClasses(this.icon_span, iconPosClass  + ' ui-c fa fa-fw ' + this.icon);
+      this._renderer2.appendChild(this.el.nativeElement, this.icon_span);
+    }
+
+    this.span = this._renderer2.createElement('span');
+    this.domHandler.addSomeClasses(this.span, 'ui-button-text ui-c');
+    this._renderer2.appendChild(this.span, a);
+
+    this._renderer2.appendChild(this.el.nativeElement, this.span);
     this.initialized = true;
   }
 
@@ -90,10 +101,21 @@ export class Button implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('ngOnDestroy');
+    // data;
+    this._renderer2.removeChild(this.el.nativeElement, this.span);
+    if(this.icon_span) {
+      this._renderer2.removeChild(this.el.nativeElement, this.icon_span);
+    }
+
+    // iconElement.className =
+    // this.el.nativeElement.appendChild(iconElement);
+
     // while(this.el.nativeElement.hasChildNodes()) {
+    //     console.log('hasChildNodes');
     //     this.el.nativeElement.removeChild(this.el.nativeElement.lastChild);
     // }
-    //
+
     this.initialized = false;
   }
 }
