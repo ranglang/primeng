@@ -7,11 +7,12 @@
 
 <div class="content-section implementation">
     
-    <p-pickList [source]="sourceCars" [target]="targetCars" sourceHeader="Available" targetHeader="Selected" 
-        [responsive]="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="brand">
+    <p-pickList [source]="sourceCars" [target]="targetCars" sourceHeader="Available" targetHeader="Selected" dragdrop="true"
+        [responsive]="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="brand" 
+        sourceFilterPlaceholder="Search by brand" targetFilterPlaceholder="Search by brand">
         <ng-template let-car pTemplate="item">
             <div class="ui-helper-clearfix">
-                <img src="assets/showcase/images/demo/car/{{car.brand}}.gif" style="display:inline-block;margin:2px 0 2px 2px"/>
+                <img src="assets/showcase/images/demo/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48">
                 <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{car.brand}} - {{car.year}} - {{car.color}}</div>
             </div>
         </ng-template>
@@ -19,7 +20,7 @@
     
 </div>
 
-<div class="content-section source">
+<div class="content-section documentation">
     <p-tabView effect="fade">
         <p-tabPanel header="Documentation">
             <h3>Import</h3>
@@ -37,7 +38,7 @@ import &#123;PickListModule&#125; from 'primeng/primeng';
 &lt;p-pickList [source]="list1" [target]="list2"&gt;
     &lt;ng-template let-car pTemplate="item"&gt;
         &lt;div class="ui-helper-clearfix"&gt;
-            &lt;img src="assets/showcase/images/demo/car/{{car.brand}}.gif" style="display:inline-block;margin:2px 0 2px 2px"/&gt;
+            &lt;img src="assets/showcase/images/demo/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48"&gt;
             &lt;div style="font-size:14px;float:right;margin:15px 5px 0 0"&gt;{{car.brand}} - {{car.year}} - {{car.color}}&lt;/div&gt;
         &lt;/div&gt;
     &lt;/ng-template&gt;
@@ -82,10 +83,19 @@ export class MyComponent &#123;
             
             <h3>Filtering</h3>
             <p>Options can be filtered using an input field in the overlay by enabling the filterBy property.
-                filterBy property decides which field to search(Accepts multiple fields with a comma).</p>
+                This filterBy property decides which field to search(Accepts multiple fields with a comma).</p>
 <pre>
 <code class="language-markup" pCode ngNonBindable>
 &lt;p-pickList [source]="sourceCars" [target]="targetCars" filterBy="brand"&gt;&lt;/p-pickList&gt;
+</code>
+</pre>
+
+<h3>DragDrop</h3>
+<p>Items can be reordered using drag and drop by enabling dragdrop property along with dragdropScope to avoid conflict with other drag drop events on view.
+This dragdrop property also supports cross list actions.</p>
+<pre>
+<code class="language-markup" pCode ngNonBindable>
+&lt;p-pickList [source]="sourceCars" [target]="targetCars" dragdrop="true"&gt;&lt;/p-pickList&gt;
 </code>
 </pre>
 
@@ -130,6 +140,18 @@ export class MyComponent &#123;
                             <td>string</td>
                             <td>null</td>
                             <td>When specified displays an input field to filter the items on keyup and decides which field to search (Accepts multiple fields with a comma).</td>
+                        </tr>
+                        <tr>
+                            <td>dragdrop</td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Whether to enable dragdrop based reordering.</td>
+                        </tr>
+                        <tr>
+                            <td>dragdropScope</td>
+                            <td>string</td>
+                            <td>null</td>
+                            <td>Unique key of drag drop events to avoid conflict with other drag drop events on the page.</td>
                         </tr>
                         <tr>
                             <td>style</td>
@@ -179,6 +201,18 @@ export class MyComponent &#123;
                             <td>true</td>
                             <td>Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item
                             can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically.</td>
+                        </tr>
+                        <tr>
+                            <td>sourceFilterPlaceholder</td>
+                            <td>string</td>
+                            <td>null</td>
+                            <td>Placeholder text on source filter input.</td>
+                        </tr>
+                        <tr>
+                            <td>targetFilterPlaceholder</td>
+                            <td>string</td>
+                            <td>null</td>
+                            <td>Placeholder text on target filter input.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -277,12 +311,17 @@ export class MyComponent &#123;
         </p-tabPanel>
 
         <p-tabPanel header="Source">
+            <a href="https://github.com/primefaces/primeng/tree/master/src/app/showcase/components/picklist" class="btn-viewsource" target="_blank">
+                <i class="fa fa-github"></i>
+                <span>View on GitHub</span>
+            </a>
 <pre>
 <code class="language-markup" pCode ngNonBindable>
-&lt;p-pickList [source]="sourceCars" [target]="targetCars" sourceHeader="Available" targetHeader="Selected" [responsive]="true" [sourceStyle]="&#123;'height':'300px'&#125;" [targetStyle]="&#123;'height':'300px'&#125;"&gt;
+&lt;p-pickList [source]="sourceCars" [target]="targetCars" sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="brand" 
+        dragdrop="true" filterBy="brand" sourceFilterPlaceholder="Search by brand" targetFilterPlaceholder="Search by brand" [sourceStyle]="&#123;'height':'300px'&#125;" [targetStyle]="&#123;'height':'300px'&#125;"&gt;
     &lt;ng-template let-car pTemplate="item"&gt;
         &lt;div class="ui-helper-clearfix"&gt;
-            &lt;img src="assets/showcase/images/demo/car/{{car.brand}}.gif" style="display:inline-block;margin:2px 0 2px 2px"/&gt;
+            &lt;img src="assets/showcase/images/demo/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48"&gt;
             &lt;div style="font-size:14px;float:right;margin:15px 5px 0 0"&gt;{{car.brand}} - {{car.year}} - {{car.color}}&lt;/div&gt;
         &lt;/div&gt;
     &lt;/ng-template&gt;
