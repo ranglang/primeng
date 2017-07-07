@@ -3,7 +3,9 @@
   "version": "4.1.0-SNAPSHOT",
   "license": "MIT",
   "scripts": {
+    "s": "./node_modules/.bin/tsc",
     "ng": "ng",
+    "ngc": "ngc",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",

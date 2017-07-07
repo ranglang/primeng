@@ -9,10 +9,11 @@ import {
   HostListener,
   Input
 } from '@angular/core';
-import {DomHandler} from '../dom/domhandler';
+// import {DomHandler} from '../dom/domhandler';
 import {CommonModule} from '@angular/common';
 import {Platform} from "../platform/platform";
 import {PlatformModule} from "../platform/index";
+import {DomHandler} from "../dom/domhandler";
 
 @Directive({
   selector: '[pButton]',
@@ -43,13 +44,13 @@ export class Button implements AfterViewInit, OnDestroy {
     if(this.icon) {
       // let iconElement = document.createElement("span");
       this.icon_span = this._renderer2.createElement('span');
-      let iconPosClass = (this.iconPos == 'right') ? 'ui-button-icon-right': 'ui-button-icon-left';
-      this.domHandler.addSomeClasses(this.icon_span, iconPosClass  + ' ui-c fa fa-fw ' + this.icon);
+      let iconPosClass = (this.iconPos === 'right') ? 'ui-button-icon-right': 'ui-button-icon-left';
+      this.domHandler.addMultipleClasses(this.icon_span, iconPosClass  + ' ui-c fa fa-fw ' + this.icon);
       this._renderer2.appendChild(this.el.nativeElement, this.icon_span);
     }
 
     this.span = this._renderer2.createElement('span');
-    this.domHandler.addSomeClasses(this.span, 'ui-button-text ui-c');
+    this.domHandler.addMultipleClasses(this.span, 'ui-button-text ui-c');
     this._renderer2.appendChild(this.span, a);
 
     this._renderer2.appendChild(this.el.nativeElement, this.span);

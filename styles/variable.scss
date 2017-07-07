@@ -1,0 +1,156 @@
+
+@function em($px, $base: 16) {
+  @return ($px / $base) * 1em;
+}
+
+@mixin hover-border() {
+  border-style: solid;
+  border-width: 1px;
+  border-color: $whiteBorder;
+}
+
+@mixin hover-button() {
+  &:enabled:hover {
+    opacity: 0.9;
+  };
+}
+
+@mixin full-height-minus-header() {
+  min-height: unquote("calc(100vh - 4.375em)");
+  min-height: unquote("-moz-calc(100vh - 4.375em)");
+  min-height: unquote("-webkit-calc(100vh - 4.375em)");
+}
+
+$fontFamily:  "Roboto", "Trebuchet MS", Arial, Helvetica, sans-serif;
+$fontSize: 1em;
+$borderRadius: em(3);
+$disabledOpacity: 0.35;
+$primary: rgb(0, 203, 129);
+$primaryGreen: rgb(0, 203, 129);
+
+//Header
+$headerBorderWidth: 1px;
+$headerBorderColor: #d9d9d9;
+$headerBgColor: #f6f7f9;
+$headerTextColor: #1b1d1f;
+$headerFontWeight: normal;
+$headerIconTextColor: #1b1d1f;
+
+//Content
+$contentBorderWidth: 1px;
+$contentBorderColor: #D5D5D5;
+$contentBgColor: #ffffff;
+$contentTextColor: #222222;
+
+//Default State
+$stateDefaultBorderWidth: 1px;
+$stateDefaultBorderColor: #d6d6d6;
+$stateDefaultBgColor: $primary;
+$stateDefaultTextColor: #555555;
+
+//Active State
+$stateActiveBorderColor: #bebebe;
+
+$stateActiveBgColor: #d6d6d6;
+
+$stateActiveTextColor: #212121;
+
+//Highlight State
+$stateHighlightBorderColor: rgb(0,203,129);
+//$stateHighlightBorderColor;
+$stateHighlightBgColor: #28a879;
+//186ba0;
+$stateHighlightTextColor: #FFFFFF;
+
+//Focus State
+$stateFocusBorderColor: #c0c0c0;
+$stateFocusBgColor: #eeeeee;
+$stateFocusTextColor: #212121;
+
+//Error State
+$stateErrorBorderColor: #f44336;
+$stateErrorBgColor: #f5554a;
+$stateErrorTextColor: #cd0a0a;
+
+//Hover State
+$stateHoverBorderColor: #c0c0c0;
+$stateHoverBgColor: #eeeeee;
+$stateHoverTextColor: #212121;
+
+//Forms
+$inputBgColor: #ffffff;
+$inputTextColor: #222222;
+$invalidInputBorderColor: #f44336;
+
+$primaryColor : rgb(0,203,129);
+$primaryColorFocus: #02b171;
+
+$shadowColor: #2fba87;
+
+$white40: rgba(255,255, 255, 0.4);
+
+/*hover menu*/
+$charcoalTwo  : rgb(62,69,65);
+
+$secondColor: rgb(245, 112, 99);
+$selectBorder: rgb(204, 204, 204);
+
+$secondaryColor: rgb(241, 242, 243);
+
+$titleColor: rgb(0, 0, 0);
+
+$primaryBlack: rgb(37, 40, 39);
+
+
+$deepGreen: rgb(23, 189, 95);
+
+$editColor: rgb(48, 152, 224);
+
+$deleteColor: rgb(239, 88, 81);
+
+
+$huihui: rgb(169, 169, 169);
+
+
+$rightSideDetailColor: rgb(169, 169, 169);
+
+$coolGrey: rgb(148, 149, 150);
+
+$blackTow: rgb(20, 20, 20);
+
+$greenBlueTwo : rgb(0, 197, 115);
+
+$orangeish : rgb(252, 143, 71);
+
+$charcoal: rgb(50, 52, 51);
+
+$boxShadow : 0 12px 20px #919d97;
+
+$coral: rgb(245, 112, 99);
+
+$pinkishGreyTwo : rgb(201, 201, 201);
+
+$black: rgb(36, 36, 36);
+
+$lightGrey: rgb(211, 229, 222);
+
+$paleGrey: #eeeeee;
+//rgb(241, 242, 243);
+
+
+$whiteBorder: rgb(224, 224, 224);
+
+$pastelRed: rgb(232, 97, 84);
+
+$greyish: rgba(169,169,169, 0.86);
+
+$neonBlue: rgb(0,222,255);
+
+$darkSkyBlue: rgb(48, 152, 224);
+
+$modalFormBg: rgba(28, 31, 28, 0.68);
+
+$silver: rgb(189,189,189);
+
+$colorDisable: #707070;
+

@@ -1,33 +1,41 @@
-import {NgModule,Component,ElementRef,AfterViewInit,AfterContentInit,DoCheck,OnDestroy,Input,Output,SimpleChange,EventEmitter,ContentChild,ContentChildren,QueryList,TemplateRef,IterableDiffers} from '@angular/core';
+
+import {NgModule,Component,ElementRef,AfterViewInit,AfterContentInit,OnDestroy,Input,Output,SimpleChange,EventEmitter,ContentChild,ContentChildren,TemplateRef,QueryList} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Header,Footer,PrimeTemplate,SharedModule} from '../common/shared';
-import {UPaginatorModule} from '../paginator/paginator';
-import {BlockableUI} from '../common/blockableui';
+import {BlockableUI} from '../../components/common/api';
+import {Header, Footer, PrimeTemplate, SharedModule} from '../../components/common/shared';
+import {UPaginatorModule} from '../../components/paginator/paginator';
+
+// import {SharedModule,Header,Footer,PrimeTemplate} from '../common/shared';
+// import {BlockableUI} from '../common/api';
+
+
 
 @Component({
-    selector: 'p-dataGrid',
+    selector: 'u-dataList',
     template: `
-        <div [ngClass]="'ui-datagrid ui-widget'" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-datagrid-header ui-widget-header ui-corner-top" *ngIf="header">
+        <div [ngClass]="'ui-datalist ui-widget'" [ngStyle]="style" [class]="styleClass">
+            <div class="ui-datalist-header ui-widget-header ui-corner-top" *ngIf="header">
                 <ng-content select="p-header"></ng-content>
             </div>
-            <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" [alwaysShow]="alwaysShowPaginator"
-                (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='bottom' || paginatorPosition =='both'"></u-paginator>
-            <div class="ui-datagrid-content ui-widget-content">
-                <div class="ui-g">
-                    <ng-template ngFor [ngForOf]="dataToRender" [ngForTemplate]="itemTemplate" [ngForTrackBy]="trackBy"></ng-template>
-                    <div *ngIf="isEmpty()" class="ui-widget-content ui-g-12">{{emptyMessage}}</div>
-                </div>
+            <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" 
+            (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator  && paginatorPosition!='bottom' || paginatorPosition =='both'"></u-paginator>
+            <div class="ui-datalist-content ui-widget-content">
+                <div *ngIf="isEmpty()" class="ui-datalist-emptymessage">{{emptyMessage}}</div>
+                <ul class="ui-datalist-data">
+                    <li *ngFor="let item of dataToRender;let i = index;trackBy: trackBy">
+                        <ng-template [pTemplateWrapper]="itemTemplate" [item]="item" [index]="i"></ng-template>
+                    </li>
+                </ul>
             </div>
-            <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" [alwaysShow]="alwaysShowPaginator"
-                (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></u-paginator>
-            <div class="ui-datagrid-footer ui-widget-header ui-corner-top" *ngIf="footer">
+            <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" 
+            (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator  && paginatorPosition!='top' || paginatorPosition =='both'"></u-paginator>
+            <div class="ui-datalist-footer ui-widget-header ui-corner-bottom" *ngIf="footer">
                 <ng-content select="p-footer"></ng-content>
             </div>
         </div>
     `
 })
-export class DataGrid implements AfterViewInit,AfterContentInit,DoCheck,BlockableUI {
+export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
 
     @Input() paginator: boolean;
 
@@ -41,8 +49,6 @@ export class DataGrid implements AfterViewInit,AfterContentInit,DoCheck,Blockabl
 
     @Input() lazy: boolean;
 
-    @Input() emptyMessage: string = 'No records found';
-
     @Output() onLazyLoad: EventEmitter<any> = new EventEmitter();
 
     @Input() style: any;
@@ -51,11 +57,9 @@ export class DataGrid implements AfterViewInit,AfterContentInit,DoCheck,Blockabl
 
     @Input() paginatorPosition: string = 'bottom';
 
-    @Input() alwaysShowPaginator: boolean = true;
+    @Input() emptyMessage: string = 'No records found';
 
     @Input() trackBy: Function = (index: number, item: any) => item;
-
-    @Input() immutable: boolean = true;
 
     @Output() onPage: EventEmitter<any> = new EventEmitter();
 
@@ -65,21 +69,31 @@ export class DataGrid implements AfterViewInit,AfterContentInit,DoCheck,Blockabl
 
     @ContentChildren(PrimeTemplate) templates: QueryList<any>;
 
-    _value: any[];
+    public _value: any[];
 
-    itemTemplate: TemplateRef<any>;
+    public itemTemplate: TemplateRef<any>;
 
-    dataToRender: any[];
+    public dataToRender: any[];
 
-    first: number = 0;
+    public first: number = 0;
 
-    page: number = 0;
+    public page: number = 0;
 
-    differ: any;
+    constructor(public el: ElementRef) {}
 
-    constructor(public el: ElementRef, public differs: IterableDiffers) {
-		this.differ = differs.find([]).create(null);
-	}
+    ngAfterContentInit() {
+        this.templates.forEach((item) => {
+            switch(item.getType()) {
+                case 'item':
+                    this.itemTemplate = item.template;
+                    break;
+
+                default:
+                    this.itemTemplate = item.template;
+                    break;
+            }
+        });
+    }
 
     ngAfterViewInit() {
         if(this.lazy) {
@@ -90,30 +104,13 @@ export class DataGrid implements AfterViewInit,AfterContentInit,DoCheck,Blockabl
         }
     }
 
-    ngAfterContentInit() {
-        this.templates.forEach((item) => {
-            switch(item.getType()) {
-                case 'item':
-                    this.itemTemplate = item.template;
-                break;
-
-                default:
-                    this.itemTemplate = item.template;
-                break;
-            }
-        });
-    }
-
     @Input() get value(): any[] {
         return this._value;
     }
 
     set value(val:any[]) {
         this._value = val;
-
-        if(this.immutable) {
-            this.handleDataChange();
-        }
+        this.handleDataChange();
     }
 
     handleDataChange() {
@@ -121,15 +118,6 @@ export class DataGrid implements AfterViewInit,AfterContentInit,DoCheck,Blockabl
             this.updatePaginator();
         }
         this.updateDataToRender(this.value);
-    }
-
-    ngDoCheck() {
-        if(!this.immutable) {
-            let changes = this.differ.diff(this.value);
-            if(changes) {
-                this.handleDataChange();
-            }
-        }
     }
 
     updatePaginator() {
@@ -188,14 +176,15 @@ export class DataGrid implements AfterViewInit,AfterContentInit,DoCheck,Blockabl
         };
     }
 
-    getBlockableElement(): HTMLElement {
+    getBlockableElement(): HTMLElement {
         return this.el.nativeElement.children[0];
     }
 }
 
 @NgModule({
-    imports: [CommonModule,SharedModule,UPaginatorModule],
-    exports: [DataGrid,SharedModule],
-    declarations: [DataGrid]
+    imports: [CommonModule,SharedModule, UPaginatorModule],
+    exports: [DataList,SharedModule],
+    declarations: [DataList]
 })
-export class DataGridModule { }
+export class UDataListModule { }
+

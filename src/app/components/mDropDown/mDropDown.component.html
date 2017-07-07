@@ -1,0 +1,27 @@
+<!--'ui-state-disabled':disabled,-->
+<!--'ui-dropdown-open':panelVisible,-->
+<!--'female': category === 'female' , 'male' : category === 'male' -->
+<!--'ui-state-focus':focus,-->
+<div #container [ngClass]="{'ui-dropdown ui-widget ui-state-default .ui-corner-all-4 ui-helper-clearfix':true,
+             'female': true}" [ngStyle]="style" (click)="click($event)">
+     <!--(click)="onMouseclick($event)"  [class]="styleClass">-->
+    <!--<div class="ui-helper-hidden-accessible" *ngIf="autoWidth">-->
+        <!--<select [required]="required" tabindex="-1">-->
+            <!--<option *ngFor="let option of options" [value]="option.value" [selected]="selectedOption == option">{{option.label}}</option>-->
+        <!--</select>-->
+    <!--</div>-->
+
+    <!--[attr.id]="inputId"-->
+    <!--(focus)="onInputFocus($event)" (blur)="onInputBlur($event)" (keydown)="onKeydown($event)" [disabled]="disabled" [attr.tabindex]="tabindex"-->
+    <div class="ui-helper-hidden-accessible">
+        <input #in  type="text" readonly >
+    </div>
+
+    <!--*ngIf="!editable"-->
+    <div class="headerTrigger">
+        <label [ngClass]="{'ui-dropdown-label ui-inputtext ui-corner-all':true,'ui-dropdown-label-empty':!value}" >{{value||'empty'}}</label>
+        <div class="ui-dropdown-trigger ui-state-default ui-corner-right">
+            <span class="fa fa-fw fa-caret-down ui-c"></span>
+        </div>
+    </div>
+</div>
