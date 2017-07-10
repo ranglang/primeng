@@ -5,7 +5,6 @@ import {Toast} from './toast';
 
 @Component({
     selector: 'toaster-container',
-    styleUrls: ['./toaster.scss'],
     template: `
         <div id="toast-container" [ngClass]="[toasterconfig.positionClass, toasterconfig.animationClass]" class="ng-animate">
             <div toastComp *ngFor="let toast of toasts" class="toast" [toast]="toast"
@@ -23,7 +22,7 @@ export class ToasterContainerComponent {
     private addToastSubscriber: any;
     private clearToastsSubscriber: any;
     private toasterService: ToasterService;
-    
+
     @Input() toasterconfig: ToasterConfig;
 
     public toasts: Toast[] = [];
@@ -57,7 +56,7 @@ export class ToasterContainerComponent {
             }
         }
     }
-    
+
     childClick($event: any) {
         this.click($event.value.toast, $event.value.isCloseButton);
     }
@@ -145,7 +144,7 @@ export class ToasterContainerComponent {
     }
 
     private configureTimer(toast: Toast) {
-        var timeout = (typeof toast.timeout === "number") 
+        var timeout = (typeof toast.timeout === "number")
             ? toast.timeout : this.toasterconfig.timeout;
 
         if (typeof timeout === "object") timeout = timeout[toast.type];

@@ -17,10 +17,24 @@ import {ObjectUtils} from "../utils/objectutils";
 
 @Component({
     selector: 'mDropdown',
-    templateUrl:  'mDropDown.component.html',
-    styleUrls: ['mDropDown.component.scss', '../dropdown/dropdown.component.scss'],
+    template:
+    `
+      <div #container [ngClass]="{'ui-dropdown ui-widget ui-state-default .ui-corner-all-4 ui-helper-clearfix':true,
+             'female': true}" [ngStyle]="style" (click)="click($event)">
+        <div class="ui-helper-hidden-accessible">
+          <input #in  type="text" readonly >
+        </div>
+        <div class="headerTrigger">
+          <label [ngClass]="{'ui-dropdown-label ui-inputtext ui-corner-all':true,'ui-dropdown-label-empty':!value}" >{{value||'empty'}}</label>
+          <div class="ui-dropdown-trigger ui-state-default ui-corner-right">
+            <span class="fa fa-fw fa-caret-down ui-c"></span>
+          </div>
+        </div>
+      </div>
+    `,
     providers: [DomHandler, ObjectUtils]
 })
+// styleUrls: ['mDropDown.component.scss', '../dropdown/dropdown.component.scss'],
 
  // implements OnInit,AfterViewInit,AfterContentInit,AfterViewChecked,OnDestroy,ControlValueAccessor
 export class MDropdown {

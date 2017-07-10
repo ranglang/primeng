@@ -5,7 +5,6 @@ import {
     OnDestroy,
     Input
 } from '@angular/core';
-// import {DomHandler} from 'primeng/components/dom/domhandler';
 import { DomHandler } from '../dom/domhandler';
 
 

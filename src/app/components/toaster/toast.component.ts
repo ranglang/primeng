@@ -1,13 +1,14 @@
-import {Component, Input, ViewChild, ViewContainerRef, EventEmitter, 
-    ComponentFactoryResolver, ChangeDetectorRef }
-from '@angular/core';
+import {
+  Component, Input, ViewChild, ViewContainerRef, EventEmitter,
+  ComponentFactoryResolver, ChangeDetectorRef, NgModule
+}
+  from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Toast} from './toast';
 import {BodyOutputType} from './bodyOutputType';
 
 @Component({
     selector: '[toastComp]',
-    styleUrls: ['./toasterComp.scss'],
     template: `
         <!--<i class="toaster-icon" ></i>-->
         <div class="toast-content">
@@ -28,7 +29,7 @@ import {BodyOutputType} from './bodyOutputType';
 })
 
 export class ToastComponent {
-    
+
     @Input() toast: Toast;
     @Input() iconClass: string;
     @ViewChild('componentBody', { read: ViewContainerRef }) componentBody: ViewContainerRef;
@@ -66,3 +67,4 @@ export class ToastComponent {
         });
     }
 }
+

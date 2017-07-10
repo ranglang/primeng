@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ToastComponent } from './toast.component';
 import { ToasterContainerComponent } from './toaster-container.component';
 import { ToasterService } from './toaster.service';
-import { UButtonModule } from '../button/uButton.module';
+import {UButtonModule} from "../button/uButton";
 
 export interface Toast {
     type: string;
@@ -32,6 +32,7 @@ export interface ClickHandler {
 export interface OnActionCallback {
     (toast: Toast) : void
 }
+
 
 @NgModule({
   imports: [CommonModule, UButtonModule],

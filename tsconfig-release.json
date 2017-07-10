@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "/Users/rang/udian/angular-webpack2-starter/src/app/components",
+    "outDir": "/home/tian/udian/navi-web/src/components",
     "target": "es5",
     "module": "es2015",
     "baseUrl": "src",
@@ -10,14 +10,17 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
+    "declaration": true,
     "suppressImplicitAnyIndexErrors": true,
     "lib": ["dom","es6"]
   },
   "include": [
     "src/app/components/**/*"
   ],
+//      "skipMetadataEmit" : false,
   "angularCompilerOptions": {
     "genDir": "aot",
-    "skipMetadataEmit" : false
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true
   }
 }

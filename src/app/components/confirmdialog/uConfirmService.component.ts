@@ -12,12 +12,33 @@ import { ButtonModule} from '../../components/button/button';
 import {SharedModule, Footer} from '../../components/common/shared';
 // import {DomHandler} from '../../dom/domhandler';
 // import {DomHandler} from './dom/domHandler';
-import {UButtonModule} from '../button/uButton.module';
+import {UButtonModule} from '../button/uButton';
 
 @Component({
   selector: 'u-p-confirmDialog',
-  templateUrl: 'uConfirmService.component.html',
-  styleUrls: [ 'uConfirmService.component.scss' ],
+  template:
+  `
+    <div
+      [ngClass]="{'ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all-10 u-ui-shadow':true,'ui-dialog-rtl':rtl}"
+      [style.display]="visible ? 'block' : 'none'" [style.width.px]="width" [style.height.px]="height"
+      (mousedown)="moveOnTop()" [@dialogState]="visible ? 'visible' : 'hidden'">
+      <div #content>
+        <ng-content></ng-content>
+      </div>
+
+      <div class="confirmContent">
+        <div class="faMessage" *ngIf="header">{{message}}</div>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="footer">
+          <ng-content select="p-footer"></ng-content>
+        </div>
+        <div class="ui-helper-clearfix u-ui-dialog-footer" *ngIf="!footer">
+          <button uButton [category]="'cancel'" [label]="rejectLabel" (click)="accept()" *ngIf="rejectVisible"></button>
+          <button uButton [category]="'continue'" [label]="acceptLabel" (click)="accept()" *ngIf="acceptVisible"></button>
+        </div>
+      </div>
+    </div>
+  `,
+  // styleUrls: [ 'uConfirmService.component.scss' ],
   animations: [
     trigger('dialogState', [
       state('hidden', style({

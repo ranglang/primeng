@@ -13,7 +13,6 @@ import {
 import {DomHandler} from "../../components/dom/domhandler";
 import { BlockableUI, FilterMetadata, LazyLoadEvent,SortMeta} from "../../components/common/api";
 import {Subscription} from 'rxjs/Subscription';
-// import {PaginatorModule} from "primeng/components/paginator/paginator";
 // import {
 //   RowExpansionLoader,
 //   DTCheckbox, DTRadioButton, DataTableModule,
@@ -104,7 +103,6 @@ export class URowExpansionLoader {
 
 @Component({
   selector: '[uColumnHeaders]',
-  styleUrls: ['database.component.scss'],
   template: `
         <ng-template ngFor let-col [ngForOf]="columns" let-lastCol="last">
             <th #headerCell [ngStyle]="col.style" [class]="col.styleClass" [style.display]="col.hidden ? 'none' : 'table-cell'" (click)="dt.sort($event,col)" [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan"
@@ -136,7 +134,6 @@ export class UColumnHeaders {
 
 @Component({
   selector: '[uColumnFooters]',
-  styleUrls: ['database.component.scss'],
   template: `
         <td *ngFor="let col of columns" [ngStyle]="col.style" [class]="col.styleClass"
             [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan"
@@ -156,7 +153,6 @@ export class UColumnFooters {
 }
 @Component({
   selector: '[uTableBody]',
-  styleUrls: ['database.component.scss'],
   template: `
         <ng-template ngFor let-rowData [ngForOf]="dt.dataToRender" let-even="even" let-odd="odd" let-rowIndex="index">
             <tr #rowGroupElement class="ui-widget-header ui-rowgroup-header "
@@ -264,7 +260,6 @@ export class UTableBody {
             </div>
         </div>
     `,
-  styleUrls: ['database.component.scss']
 })
 
 export class UScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy {
@@ -422,7 +417,6 @@ export class UScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy
 
 @Component({
   selector: 'u-dataTable',
-  styleUrls: ['database.component.scss'],
   template: `
         <div [ngStyle]="style" [class]="styleClass" [style.width]="containerWidth"
             [ngClass]="{'ui-datatable ui-widget':true,'ui-datatable-reflow':responsive,'ui-datatable-stacked':stacked,'ui-datatable-resizable':resizableColumns,'ui-datatable-scrollable':scrollable}">
