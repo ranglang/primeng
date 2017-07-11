@@ -28,7 +28,8 @@ import {UButtonModule} from '../button/uButton';
 
       <div class="confirmContent">
         <div class="faMessage" *ngIf="header">{{message}}</div>
-        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix" *ngIf="footer">
+        <!--ui-widget-content -->
+        <div class="ui-dialog-buttonpane ui-helper-clearfix" *ngIf="footer">
           <ng-content select="p-footer"></ng-content>
         </div>
         <div class="ui-helper-clearfix u-ui-dialog-footer" *ngIf="!footer">

@@ -14,7 +14,7 @@
 @import '../../../app/components/datascroller/datascroller.css';
 @import '../../../app/components/datatable/datatable.css';
 @import '../../../app/components/dialog/dialog.css';
-@import '../../../app/components/dropdown/dropdown.css';
+@import '../../../app/components/dropdown/dropdown.scss';
 @import '../../../app/components/fieldset/fieldset.css';
 @import '../../../app/components/fileupload/fileupload.css';
 @import '../../../app/components/galleria/galleria.css';
@@ -45,7 +45,7 @@
 @import '../../../app/components/splitbutton/splitbutton.css';
 @import '../../../app/components/steps/steps.css';
 @import '../../../app/components/tabmenu/tabmenu.css';
-@import '../../../app/components/tabview/tabview.css';
+@import '../../../app/components/tabview/tabview.scss';
 @import '../../../app/components/terminal/terminal.css';
 @import '../../../app/components/toolbar/toolbar.css';
 @import '../../../app/components/tooltip/tooltip.css';

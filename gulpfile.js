@@ -5,18 +5,34 @@ var gulp = require('gulp'),
     uglifycss = require('gulp-uglifycss'),
     rename = require('gulp-rename'),
     del = require('del'),
+ sourcemaps = require('gulp-sourcemaps'),
     flatten = require('gulp-flatten');
+var sass = require('gulp-sass');
+
 
 // .pipe(concat('primeng.css'))
 gulp.task('build-css', function() {
+  gulp.src('src/app/components/**/**.scss')
+    .pipe(sass().on('error', sass.logError))
+    .on('error', sass.logError)
+    .pipe(gulp.dest('/home/tian/udian/navi-web/src/app/styles/resource'));
+
+  //   .pipe(sourcemaps.write('maps', {
+  //     includeContent: false,
+  //     sourceRoot: 'source'
+  //   }))
+  //   .pipe(gulp.dest('resources'))
+
 	gulp.src([
         'src/app/components/common/common.css',
 		    'src/app/components/**/*.css'
     ])
-	.pipe(gulp.dest('resources'));
+	.pipe(gulp.dest('/home/tian/udian/navi-web/src/app/styles/resource'));
 });
 
 gulp.task('build-css-prod', function() {
+
+
     gulp.src([
         'src/app/components/common/common.css',
         'src/app/components/**/*.css'

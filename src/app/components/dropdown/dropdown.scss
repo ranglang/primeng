@@ -1,3 +1,5 @@
+@import "../../../variable";
+
 .ui-dropdown {
     display: inline-block;
     position: relative;
@@ -18,10 +20,10 @@
     padding: 0 .25em;
 }
 
-.ui-dropdown .ui-dropdown-trigger .fa {
-    margin-top: .3em;
-    margin-left: -.125em;
-}
+//.ui-dropdown .ui-dropdown-trigger .fa {
+//    margin-top: .3em;
+//    margin-left: -.125em;
+//}
 
 .ui-dropdown .ui-dropdown-label  {
     display: block;
@@ -35,7 +37,7 @@
 
 .ui-dropdown .ui-dropdown-item-empty,
 .ui-dropdown .ui-dropdown-label-empty {
-    text-indent: -9999px;   
+    text-indent: -9999px;
 }
 
 .ui-dropdown.ui-state-disabled .ui-dropdown-trigger,
@@ -104,4 +106,80 @@
 /** Dropdown **/
 .ui-fluid .ui-dropdown {
     width: 100%;
+}
+
+.female.ui-state-default {
+  background-color: transparent;
+  border:none;
+}
+
+.female.ui-dropdown.ui-state-focus {
+  box-shadow: none;
+}
+
+.female .ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):hover {
+  background-color: $lightGrey;
+}
+
+.female .headerTrigger {
+  display: flex;
+  justify-content: center;
+}
+
+.female label.ui-dropdown-label {
+  padding-right: 0;
+  text-align: center;
+  width: inherit;
+  border: none;
+}
+
+
+.female.ui-dropdown .ui-dropdown-trigger .fa {
+  line-height: 1em;
+  padding: .25em;
+}
+
+.female .ui-dropdown-panel .ui-dropdown-item {
+  text-align: center;
+  border-radius: 0.25em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  padding-right: 0.25em;
+  line-height: 1.25em;
+  margin-bottom: 0.375em;
+}
+
+.female.ui-dropdown  .headerTrigger .ui-dropdown-trigger {
+  position: relative;
+  border: none;
+  background-color: transparent;
+}
+
+.female .ui-dropdown-panel .ui-dropdown-list {
+  background-color: $paleGrey;
+}
+.female .ui-widget-content .ui-state-highlight, .ui-state-highlight {
+  background-color: $lightGrey;
+  color: rgb(112, 112, 112);
+}
+
+.female .ui-inputtext{
+  background-color: transparent;
+  text-align: right;
+}
+
+
+.male.ui-dropdown .ui-dropdown-trigger {
+  display: flex;
+  border: none;
+  background-color: $pinkishGreyTwo;
+  color: white;
+  width: em(40);
+  text-align: center;
+  padding-left: 0;
+}
+
+.male.ui-dropdown .ui-dropdown-trigger .fa {
+  margin: auto;
+  font-size: em(20);
 }

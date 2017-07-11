@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "s": "./node_modules/.bin/tsc",
-    "dist": "./node_modules/.bin/ngc -p tsconfig-release.json",
+    "dist": "./node_modules/.bin/ngc -p tsconfig-release.json;./node_modules/.bin/tsc",
     "ng": "ng",
     "ngc": "ngc",
     "start": "ng serve",
@@ -66,5 +66,10 @@
     "typescript": "~2.3.3",
     "web-animations-js": "^2.2.2",
     "zone.js": "^0.8.4"
+  },
+  "dependencies": {
+    "gulp-ruby-sass": "^2.1.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0"
   }
 }
