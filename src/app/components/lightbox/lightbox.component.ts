@@ -1,4 +1,7 @@
-import {NgModule,Component,ElementRef,Input,Output,Renderer,AfterViewInit,OnDestroy} from '@angular/core';
+import {
+  NgModule, Component, ElementRef, Input, Output, Renderer, AfterViewInit, OnDestroy,
+  ChangeDetectorRef
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 
@@ -47,7 +50,7 @@ export class Lightbox implements AfterViewInit,OnDestroy{
 
   @Input() styleClass: string;
 
-  @Input() appendTo: any;
+  @Input() appendTo = 'body';
 
   @Input() easing: 'ease-out';
 
@@ -73,9 +76,15 @@ export class Lightbox implements AfterViewInit,OnDestroy{
 
   public documentClickListener: any;
 
-  constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer) {}
+  constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer,
+              private cd: ChangeDetectorRef
+  ) {
+    console.log('constructor');
+
+  }
 
   onImageClick(event,image,i,content) {
+    console.log('onImageClick');
     this.index = i;
     this.loading = true;
     content.style.width = 32 + 'px';
@@ -88,7 +97,7 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   }
 
   ngAfterViewInit() {
-    this.panel = this.domHandler.findSingle(this.el.nativeElement, '.ui-lightbox ');
+    this.panel = this.domHandler.findSingle(this.el.nativeElement, '.ui-lightbox');
 
     if(this.appendTo) {
       if(this.appendTo === 'body')
@@ -115,10 +124,14 @@ export class Lightbox implements AfterViewInit,OnDestroy{
     setTimeout(() => {
       this.currentImage = image;
       this.captionText = image.title;
+      console.log('this.currentImage');
+      console.log(this.currentImage);
+      this.cd.markForCheck();
     }, 1000);
   }
 
   show() {
+    console.log('show');
     this.mask = document.createElement('div');
     this.mask.style.zIndex = ++DomHandler.zindex;
     this.domHandler.addMultipleClasses(this.mask, 'ui-widget-overlay ui-dialog-mask ud-modal-image');
@@ -146,6 +159,7 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   }
 
   center() {
+    console.log('center');
     let elementWidth = this.domHandler.getOuterWidth(this.panel);
     let elementHeight = this.domHandler.getOuterHeight(this.panel);
     if(elementWidth == 0 && elementHeight == 0) {
@@ -165,26 +179,37 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   }
 
   onImageLoad(event,content) {
+    console.log('onImageLoad');
     let image = event.target;
     image.style.visibility = 'hidden';
     image.style.display = 'block';
     let imageWidth = this.domHandler.getOuterWidth(image);
     let imageHeight = this.domHandler.getOuterHeight(image);
-    image.style.display = 'none';
+    console.log('imageWidth: ' + imageWidth);
+    console.log('imageHeight: ' + imageHeight);
+    // image.style.display = 'none';
+    image.style.display = 'block';
     image.style.visibility = 'visible';
-
     content.style.width = imageWidth + 'px';
     content.style.height = imageHeight + 'px';
+    //
+    // this.panel.style.left = parseInt(this.panel.style.left) - (  imageWidth - this.domHandler.getOuterWidth(this.panel)) / 2 + 'px';
+    // this.panel.style.top = parseInt(this.panel.style.top) + (this.domHandler.getOuterHeight(this.panel) - imageHeight) / 2 + 'px';
+    // this.center();
 
-    this.panel.style.left = parseInt(this.panel.style.left) - (  imageWidth - this.domHandler.getOuterWidth(this.panel)) / 2 + 'px';
-    this.panel.style.top = parseInt(this.panel.style.top) + (this.domHandler.getOuterHeight(this.panel) - imageHeight) / 2 + 'px';
+    const viewport = this.domHandler.getViewport();
+    const x = (viewport.width - imageWidth) / 2;
+    const y = (viewport.height - imageHeight) / 2;
 
-    setTimeout(() => {
-      this.domHandler.fadeIn(image, 500);
-      image.style.display = 'block';
-      //this.captionText = this.currentImage.title;
-      this.loading = false;
-    }, parseInt(this.effectDuration));
+    this.panel.style.left = x + 'px';
+    this.panel.style.top = y + 'px';
+    this.loading = false;
+
+    // setTimeout(() => {
+    //   this.domHandler.fadeIn(image, 500);
+    //   image.style.display = 'block';
+    // //   //this.captionText = this.currentImage.title;
+    // }, parseInt(this.effectDuration));
   }
 
   prev(placeholder: any) {
