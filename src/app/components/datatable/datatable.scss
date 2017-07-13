@@ -144,7 +144,6 @@
 //  border: none;
 //}
 
-
 .ui-datatable .ui-paginator-bottom {
   border-top-width: 0;
 }
@@ -388,9 +387,9 @@ th.ui-state-default.u-tr{
   border: none;
 }
 
-.ui-widget-header .ui-state-default,  .ui-widget-content .ui-state-default,  .ui-state-default, .ui-widget-content {
-  border: none;
-}
+//.ui-widget-header .ui-state-default,  .ui-widget-content .ui-state-default,  .ui-state-default, .ui-widget-content {
+//  border: none;
+//}
 
 tr.ui-widget-content.u-tbody-tr{
   height: em(60);

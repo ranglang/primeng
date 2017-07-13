@@ -32,7 +32,7 @@
 @import '../../../app/components/orderlist/orderlist.css';
 @import '../../../app/components/organizationchart/organizationchart.css';
 @import '../../../app/components/overlaypanel/overlaypanel.css';
-@import '../../../app/components/paginator/paginator.css';
+@import '../../../app/components/paginator/paginator.scss';
 @import '../../../app/components/panel/panel.css';
 @import '../../../app/components/password/password.css';
 @import '../../../app/components/picklist/picklist.css';
