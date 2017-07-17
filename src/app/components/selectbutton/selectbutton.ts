@@ -30,7 +30,7 @@ export class SelectButton implements ControlValueAccessor, OnChanges {
     // if(changes[])
     console.log('ngOnChanges.......................');
     console.log(changes);
-    if(this.value) {
+    if (this.value) {
       console.log('value: ' + this.value);
     }
   }

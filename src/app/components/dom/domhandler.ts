@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {duration} from "moment";
 
 @Injectable()
 export class DomHandler {
@@ -158,6 +159,8 @@ export class DomHandler {
     let containerRect = container.getBoundingClientRect();
     let itemRect = item.getBoundingClientRect();
     let offset = (itemRect.top + document.body.scrollTop) - (containerRect.top + document.body.scrollTop) - borderTop - paddingTop;
+
+    console.log('offset: ' + offset);
     let scroll = container.scrollTop;
     let elementHeight = container.clientHeight;
     let itemHeight = this.getOuterHeight(item);
@@ -168,6 +171,47 @@ export class DomHandler {
     else if ((offset + itemHeight) > elementHeight) {
       container.scrollTop = scroll + offset - elementHeight + itemHeight;
     }
+    console.log('container.scrollTop: ' + container.scrollTop);
+  }
+
+  public scrollSmoothInView(container, item, duration: number) {
+    let borderTopValue: string = getComputedStyle(container).getPropertyValue('borderTopWidth');
+    let borderTop: number = borderTopValue ? parseFloat(borderTopValue) : 0;
+    let paddingTopValue: string = getComputedStyle(container).getPropertyValue('paddingTop');
+    let paddingTop: number = paddingTopValue ? parseFloat(paddingTopValue) : 0;
+    let containerRect = container.getBoundingClientRect();
+    let itemRect = item.getBoundingClientRect();
+    let offset = (itemRect.top + document.body.scrollTop) - (containerRect.top + document.body.scrollTop) - borderTop - paddingTop;
+
+    console.log('offset: ' + offset);
+    let scroll = container.scrollTop;
+    let elementHeight = container.clientHeight;
+    let itemHeight = this.getOuterHeight(item);
+
+    let scrollTop;
+    if (offset < 0) {
+      scrollTop = scroll + offset;
+    }
+    else if ((offset + itemHeight) > elementHeight) {
+      scrollTop = scroll + offset - elementHeight + itemHeight;
+    }
+
+    console.log('previous: ' + scroll + '   aimTo' + scrollTop)
+    // console.log('container.scrollTop: ' + container.scrollTop);
+
+    let last = +new Date();
+
+     let delta = (scrollTop - scroll ) / duration;
+
+    let tick = function () {
+      let mm = (scrollTop - scroll) / ( duration / (new Date().getTime() - last) );
+      container.scrollTop =  container.scrollTop + mm;
+      last = +new Date();
+      if ( Math.abs(scrollTop - container.scrollTop ) > delta ) {
+        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+      }
+    };
+    tick();
   }
 
   public fadeIn(element, duration: number): void {
