@@ -1,4 +1,4 @@
-import {NgModule,Component,Input,Output,EventEmitter,forwardRef} from '@angular/core';
+import {NgModule, Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SelectItem} from '../common/selectitem';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
@@ -24,34 +24,43 @@ export const SELECTBUTTON_VALUE_ACCESSOR: any = {
     `,
     providers: [SELECTBUTTON_VALUE_ACCESSOR]
 })
-export class SelectButton implements ControlValueAccessor {
+export class SelectButton implements ControlValueAccessor, OnChanges {
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // if(changes[])
+    console.log('ngOnChanges.......................');
+    console.log(changes);
+    if(this.value) {
+      console.log('value: ' + this.value);
+    }
+  }
 
     @Input() options: SelectItem[];
 
     @Input() tabindex: number;
 
     @Input() multiple: boolean;
-    
+
     @Input() style: any;
-        
+
     @Input() styleClass: string;
 
     @Input() disabled: boolean;
 
     @Output() onChange: EventEmitter<any> = new EventEmitter();
-    
+
     value: any;
-    
+
     focusedItem: HTMLInputElement;
-    
+
     onModelChange: Function = () => {};
-    
+
     onModelTouched: Function = () => {};
-    
+
     writeValue(value: any) : void {
         this.value = value;
     }
-    
+
     registerOnChange(fn: Function): void {
         this.onModelChange = fn;
     }
@@ -59,18 +68,18 @@ export class SelectButton implements ControlValueAccessor {
     registerOnTouched(fn: Function): void {
         this.onModelTouched = fn;
     }
-    
+
     setDisabledState(val: boolean): void {
         this.disabled = val;
     }
-    
+
     onItemClick(event, option: SelectItem, checkbox: HTMLInputElement) {
         if(this.disabled) {
             return;
         }
-        
+
         checkbox.focus();
-        
+
         if(this.multiple) {
             let itemIndex = this.findItemIndex(option);
             if(itemIndex != -1)
@@ -81,31 +90,31 @@ export class SelectButton implements ControlValueAccessor {
         else {
             this.value = option.value;
         }
-        
+
         this.onModelChange(this.value);
-        
+
         this.onChange.emit({
             originalEvent: event,
             value: this.value
         });
     }
-    
+
     onFocus(event: Event) {
         this.focusedItem = <HTMLInputElement>event.target;
     }
-    
+
     onBlur(event) {
         this.focusedItem = null;
         this.onModelTouched();
     }
-    
+
     isSelected(option: SelectItem) {
         if(this.multiple)
             return this.findItemIndex(option) != -1;
         else
-            return option.value == this.value;
+            return option.value === this.value;
     }
-    
+
     findItemIndex(option: SelectItem) {
         let index = -1;
         if(this.value) {
