@@ -160,7 +160,6 @@ export class DomHandler {
     let itemRect = item.getBoundingClientRect();
     let offset = (itemRect.top + document.body.scrollTop) - (containerRect.top + document.body.scrollTop) - borderTop - paddingTop;
 
-    console.log('offset: ' + offset);
     let scroll = container.scrollTop;
     let elementHeight = container.clientHeight;
     let itemHeight = this.getOuterHeight(item);
@@ -171,8 +170,8 @@ export class DomHandler {
     else if ((offset + itemHeight) > elementHeight) {
       container.scrollTop = scroll + offset - elementHeight + itemHeight;
     }
-    console.log('container.scrollTop: ' + container.scrollTop);
   }
+
 
   public scrollSmoothInView(container, item, duration: number) {
     let borderTopValue: string = getComputedStyle(container).getPropertyValue('borderTopWidth');
@@ -181,9 +180,9 @@ export class DomHandler {
     let paddingTop: number = paddingTopValue ? parseFloat(paddingTopValue) : 0;
     let containerRect = container.getBoundingClientRect();
     let itemRect = item.getBoundingClientRect();
+
     let offset = (itemRect.top + document.body.scrollTop) - (containerRect.top + document.body.scrollTop) - borderTop - paddingTop;
 
-    console.log('offset: ' + offset);
     let scroll = container.scrollTop;
     let elementHeight = container.clientHeight;
     let itemHeight = this.getOuterHeight(item);
@@ -193,25 +192,30 @@ export class DomHandler {
       scrollTop = scroll + offset;
     }
     else if ((offset + itemHeight) > elementHeight) {
-      scrollTop = scroll + offset - elementHeight + itemHeight;
+      scrollTop = scroll + (offset);
+    } else {
+      scrollTop = scroll + (offset );
     }
 
-    console.log('previous: ' + scroll + '   aimTo' + scrollTop)
-    // console.log('container.scrollTop: ' + container.scrollTop);
-
+    let scrollToTimerCache;
+    let count = 1;
+    let delta = (scrollTop - container.scrollTop) / duration;
     let last = +new Date();
 
-     let delta = (scrollTop - scroll ) / duration;
-
-    let tick = function () {
-      let mm = (scrollTop - scroll) / ( duration / (new Date().getTime() - last) );
-      container.scrollTop =  container.scrollTop + mm;
-      last = +new Date();
-      if ( Math.abs(scrollTop - container.scrollTop ) > delta ) {
-        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    function tick() {
+      count = count + 1;
+      let difference = scrollTop - container.scrollTop;
+      if (Math.abs(difference) < 1) {
+        return;
       }
-    };
-    tick();
+      let period = (new Date().getTime() - last);
+      let perTick = ((delta * period) > difference ) ? difference : (delta * period );
+
+      container.scrollTop = container.scrollTop + perTick;
+      last = +new Date();
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    }
+    tick()
   }
 
   public fadeIn(element, duration: number): void {
@@ -397,9 +401,7 @@ export class DomHandler {
   }
 
   appendBrother(element: any, target: any) {
-    console.log('this.isElement(target)' + this.isElement(target));
-    // console.log(target)
-    // console.log(target.parentNode)
+    console.log(target.parentNode)
     if(this.isElement(target.parentNode)) {
         target.parentNode.appendChild(element);
     } else
