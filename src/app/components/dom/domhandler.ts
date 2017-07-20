@@ -151,6 +151,7 @@ export class DomHandler {
     return dimensions;
   }
 
+  // to See the Item in View;
   public scrollInView(container, item) {
     let borderTopValue: string = getComputedStyle(container).getPropertyValue('borderTopWidth');
     let borderTop: number = borderTopValue ? parseFloat(borderTopValue) : 0;
@@ -165,10 +166,11 @@ export class DomHandler {
     let itemHeight = this.getOuterHeight(item);
 
     if (offset < 0) {
+
       container.scrollTop = scroll + offset;
     }
     else if ((offset + itemHeight) > elementHeight) {
-      container.scrollTop = scroll + offset - elementHeight + itemHeight;
+      container.scrollTop = scroll + offset - ( elementHeight - itemHeight);
     }
   }
 
@@ -176,46 +178,59 @@ export class DomHandler {
   public scrollSmoothInView(container, item, duration: number) {
     let borderTopValue: string = getComputedStyle(container).getPropertyValue('borderTopWidth');
     let borderTop: number = borderTopValue ? parseFloat(borderTopValue) : 0;
+
     let paddingTopValue: string = getComputedStyle(container).getPropertyValue('paddingTop');
     let paddingTop: number = paddingTopValue ? parseFloat(paddingTopValue) : 0;
+
     let containerRect = container.getBoundingClientRect();
     let itemRect = item.getBoundingClientRect();
 
+    console.log('borderTop: '+ borderTop + 'paddintTop: ' + paddingTop)
     let offset = (itemRect.top + document.body.scrollTop) - (containerRect.top + document.body.scrollTop) - borderTop - paddingTop;
 
     let scroll = container.scrollTop;
     let elementHeight = container.clientHeight;
     let itemHeight = this.getOuterHeight(item);
+    let elementOuterHeight = this.getOuterHeight(container);
 
-    let scrollTop;
-    if (offset < 0) {
-      scrollTop = scroll + offset;
-    }
-    else if ((offset + itemHeight) > elementHeight) {
-      scrollTop = scroll + (offset);
+    if(offset < 0) {
+      container.scrollTop = scroll + offset;
     } else {
-      scrollTop = scroll + (offset );
+    if ((offset + itemHeight) > elementHeight) {
+      container.scrollTop = scroll + offset + itemHeight;
+    }else {
+      container.scrollTop = scroll + offset;
+    }
     }
 
-    let scrollToTimerCache;
-    let count = 1;
-    let delta = (scrollTop - container.scrollTop) / duration;
-    let last = +new Date();
+  //   // let scrollToTimerCache;
+  //   // let count = 1;
+  //   let delta = (scrollTop - container.scrollTop) / duration;
+  //   let last = +new Date();
 
-    function tick() {
-      count = count + 1;
-      let difference = scrollTop - container.scrollTop;
-      if (Math.abs(difference) < 1) {
-        return;
-      }
-      let period = (new Date().getTime() - last);
-      let perTick = ((delta * period) > difference ) ? difference : (delta * period );
-
-      container.scrollTop = container.scrollTop + perTick;
-      last = +new Date();
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    }
-    tick()
+    // function tick() {
+    //   let previous =container.scrollTop;
+    //   console.log('tick: ' + previous + ' to: ' + scrollTop)
+    //   let difference = scrollTop - previous;
+    //   if (Math.abs(difference) < 1) {
+    //     return;
+    //   }
+    //   let period = (new Date().getTime() - last);
+    //   let perTick = ((delta * period) > difference ) ? difference : (delta * period );
+    //
+    //   console.log('tick:  from' +  container.scrollTop + '  to: ' + scrollTop + ' difference: ' + difference + 'perTick: ' + perTick)
+    //   container.scrollTop = container.scrollTop + perTick;
+    //   console.log('container.scrollTop: ' + container.scrollTop + 'scrollTop : ' + previous );
+    //   if((container.scrollTop === previous) && previous !==0) {
+    //     console.log('don\'t change')
+    //     return;
+    //   }else {
+    //     console.log('not equal');
+    //   }
+    //   last = +new Date();
+    //   (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    // }
+    // tick()
   }
 
   public fadeIn(element, duration: number): void {
