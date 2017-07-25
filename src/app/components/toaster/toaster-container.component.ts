@@ -3,6 +3,7 @@ import {ToasterConfig} from './toaster-config';
 import {ToasterService, IClearWrapper} from './toaster.service';
 import {Toast} from './toast';
 import {getAotConfig} from "@angular/cli/models/webpack-configs";
+import {Platform} from "../platform/platform";
 
 @Component({
     selector: 'toaster-container',
@@ -29,15 +30,19 @@ export class ToasterContainerComponent {
     public toasts: Toast[] = [];
 
 
-    constructor(toasterService: ToasterService, private ref : ChangeDetectorRef) {
+    constructor(toasterService: ToasterService,
+                private platform: Platform,
+                private ref : ChangeDetectorRef) {
         this.toasterService = toasterService;
     }
 
     ngOnInit() {
+      if(this.platform.isBrowser) {
         this.registerSubscribers();
         if (this.toasterconfig === null || typeof this.toasterconfig === 'undefined') {
-            this.toasterconfig = new ToasterConfig();
+          this.toasterconfig = new ToasterConfig();
         }
+      }
     }
 
     // event handlers
@@ -97,6 +102,7 @@ export class ToasterContainerComponent {
     }
 
     private addToast(toast: Toast) {
+      if(!this.platform.isBrowser) return;
       console.log('addToast; /////////////////////////////////')
         toast.toasterConfig = this.toasterconfig;
 

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 import {Observer} from 'rxjs/Observer';
 import {Subject} from 'rxjs/Subject';
+import {Platform} from "../platform/platform";
 
 
 @Injectable()
@@ -21,17 +22,19 @@ export class ToasterService {
     /**
      * Creates an instance of ToasterService.
      */
-    constructor() {
+    constructor(
+      private platform: Platform
+    ) {
         this.addToast = new Observable<Toast>((observer: any) => this._addToast = observer).share();
         this.clearToasts = new Observable<IClearWrapper>((observer: any) => this._clearToasts = observer).share();
         this._removeToastSubject = new Subject<IClearWrapper>()
         this.removeToast = this._removeToastSubject.share();
     }
 
-    
+
     /**
      * Synchronously create and show a new toast instance.
-     * 
+     *
      * @param {(string | Toast)} type The type of the toast, or a Toast object.
      * @param {string=} title The toast title.
      * @param {string=} body The toast body.
@@ -39,6 +42,7 @@ export class ToasterService {
      *          The newly created Toast instance with a randomly generated GUID Id.
      */
     pop(type: string | Toast, title?: string, body?: string): Toast {
+      if(!this.platform.isBrowser) return ;
         let toast = typeof type === 'string' ? { type: type, title: title, body: body } : type;
 
         toast.toastId = Guid.newGuid();
@@ -46,23 +50,24 @@ export class ToasterService {
         if (!this._addToast) {
             throw new Error("No Toaster Containers have been initialized to receive toasts.");
         }
-        
+
         this._addToast.next(toast);
         return toast;
     }
 
-    
+
     /**
      * Asynchronously create and show a new toast instance.
-     * 
+     *
      * @param {(string | Toast)} type The type of the toast, or a Toast object.
      * @param {string=} title The toast title.
      * @param {string=} body The toast body.
      * @returns {Observable<Toast>}
-     *          A hot Observable that can be subscribed to in order to receive the Toast instance 
+     *          A hot Observable that can be subscribed to in order to receive the Toast instance
      *          with a randomly generated GUID Id.
      */
     popAsync(type: string | Toast, title?: string, body?: string): Observable<Toast> {
+      if(!this.platform.isBrowser) return ;
         setTimeout(() => {
             this.pop(type, title, body);
         }, 0);
@@ -70,12 +75,12 @@ export class ToasterService {
         return this.addToast;
     }
 
-    
+
     /**
      * Clears a toast by toastId and/or toastContainerId.
-     * 
+     *
      * @param {string} toastId The toastId to clear.
-     * @param {number=} toastContainerId 
+     * @param {number=} toastContainerId
      *        The toastContainerId of the container to remove toasts from.
      */
     clear(toastId?: string, toastContainerId?: number) {

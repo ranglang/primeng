@@ -197,8 +197,10 @@ export class DomHandler {
       container.scrollTop = scroll + offset;
     } else {
     if ((offset + itemHeight) > elementHeight) {
+      console.log('>')
       container.scrollTop = scroll + offset + itemHeight;
     }else {
+      console.log('else')
       container.scrollTop = scroll + offset;
     }
     }

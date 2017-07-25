@@ -1,9 +1,9 @@
 import {
-    Directive,
-    ElementRef,
-    AfterViewInit,
-    OnDestroy,
-    Input
+  Directive,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy,
+  Input, Renderer2
 } from '@angular/core';
 import { DomHandler } from '../dom/domhandler';
 
@@ -43,7 +43,7 @@ export class UButton implements AfterViewInit, OnDestroy {
 
     public initialized: boolean;
 
-    constructor(public el: ElementRef, public domHandler: DomHandler) {
+    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer2: Renderer2) {
     }
 
     ngAfterViewInit() {
@@ -51,16 +51,22 @@ export class UButton implements AfterViewInit, OnDestroy {
 
         this.domHandler.addMultipleClasses(this.el.nativeElement, this.getStyleClass());
         if (this.icon) {
-            let iconElement = document.createElement('span');
+            let iconElement = this.renderer2.createElement('span');
             let iconPosClass = (this.iconPos === 'right') ? 'ui-button-icon-right' : 'ui-button-icon-left';
-            iconElement.className = iconPosClass + ' ui-c fa fa-fw ' + this.icon;
-            this.el.nativeElement.appendChild(iconElement);
+            // TODO add className
+            // iconElement.className = iconPosClass + ' ui-c fa fa-fw ' + this.icon;
+            // this.el.nativeElement.appendChild(iconElement);
+          this.renderer2.appendChild(this.el.nativeElement, iconElement);
         }
 
-        let labelElement = document.createElement('span');
-        labelElement.className = 'ui-button-text ui-c';
-        labelElement.appendChild(document.createTextNode(this.label || 'ui-button'));
-        this.el.nativeElement.appendChild(labelElement);
+
+        //TODO And classname
+        let labelElement = this.renderer2.createElement('span');
+        // labelElement.className = 'ui-button-text ui-c';
+        // labelElement.appendChild();
+      this.renderer2.appendChild(labelElement, this.renderer2.createText(this.label || 'ui-button'))
+        // this.el.nativeElement.appendChild(labelElement);
+      this.renderer2.appendChild(this.el.nativeElement, labelElement);
         this.initialized = true;
     }
 
@@ -141,9 +147,11 @@ export class UButton implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        while (this.el.nativeElement.hasChildNodes()) {
-            this.el.nativeElement.removeChild(this.el.nativeElement.lastChild);
-        }
+      //TODO ngOn Desctroy
+
+        // while (this.el.nativeElement.hasChildNodes()) {
+        //     this.el.nativeElement.removeChild(this.el.nativeElement.lastChild);
+        // }
         this.initialized = false;
     }
 }
