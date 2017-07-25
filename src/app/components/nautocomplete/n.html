@@ -1,0 +1,34 @@
+<div>button</div>
+<!--<span-->
+  <!--[ngClass]="{'ui-autocomplete ui-widget':true,'ui-autocomplete-dd':dropdown,'ui-autocomplete-multiple':multiple, 'male': true}"-->
+  <!--[ngStyle]="style" [class]="styleClass">-->
+            <!--<input *ngIf="!multiple" #in [attr.type]="type" [attr.id]="inputId" [ngStyle]="inputStyle"-->
+                   <!--[class]="inputStyleClass" autocomplete="off"-->
+                   <!--[ngClass]="'ui-input-autocomplete ui-widget ui-state-default ui-corner-all ui-autocomplete-input'"-->
+                   <!--[value]="value ? (field ? objectUtils.resolveFieldData(value,field)||value : value) : null"-->
+                   <!--(click)="onInputClick($event)" (input)="onInput($event)" (keydown)="onKeydown($event)"-->
+                   <!--(focus)="onInputFocus($event)" (blur)="onInputBlur($event)" (change)="onInputChange($event)"-->
+                   <!--[attr.placeholder]="placeholder" [attr.size]="size" [attr.maxlength]="maxlength"-->
+                   <!--[attr.tabindex]="tabindex" [readonly]="readonly" [disabled]="disabled"-->
+            <!--&gt;-->
+    <!--<button type="button" pButton icon="fa-fw fa-caret-down" class="ui-autocomplete-dropdown" [disabled]="disabled"-->
+            <!--(click)="handleDropdownClick($event)" *ngIf="dropdown"></button>-->
+            <!--<div #panel class="ui-autocomplete-panel  ui-widget-content ui-widget ui-corner-all"-->
+                 <!--[style.display]="panelVisible ? 'block' : 'none'" [style.width]="appendTo ? 'auto' : '100%'"-->
+                 <!--[style.max-height]="scrollHeight">-->
+                <!--<ul-->
+                  <!--class="ui-autocomplete-items ui-autocomplete-list ui-widget-content ui-widget ui-corner-all ui-helper-reset"-->
+                  <!--*ngIf="panelVisible">-->
+                    <!--<li *ngFor="let option of suggestions; let idx = index"-->
+                        <!--[ngClass]="{'ui-autocomplete-list-item ui-corner-all':true,'ui-state-highlight':(highlightOption==option)}"-->
+                        <!--(mouseenter)="highlightOption=option" (mouseleave)="highlightOption=null"-->
+                        <!--(click)="selectItem(option)">-->
+                        <!--<span *ngIf="!itemTemplate">{{field ? option[field] : option}}</span>-->
+                        <!--<ng-template *ngIf="itemTemplate" [pTemplateWrapper]="itemTemplate" [item]="option"-->
+                                     <!--[index]="idx"></ng-template>-->
+                    <!--</li>-->
+                    <!--<li *ngIf="noResults && emptyMessage" class="ui-autocomplete-list-item ui-corner-all">{{emptyMessage}}</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</span>-->
+
