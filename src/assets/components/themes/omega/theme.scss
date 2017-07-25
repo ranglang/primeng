@@ -55,18 +55,20 @@ $invalidInputBorderColor: #f44336;
 
 @import '../_theme';
 
+
+// TODO hello
 /* roboto-regular - latin */
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: url('fonts/roboto-v15-latin-regular.eot'); /* IE9 Compat Modes */
-  src: local('Roboto'), local('Roboto-Regular'),
-       url('fonts/roboto-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/roboto-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/roboto-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('fonts/roboto-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('fonts/roboto-v15-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+  //src: url('fonts/roboto-v15-latin-regular.eot'); /* IE9 Compat Modes */
+  //src: local('Roboto'), local('Roboto-Regular'),
+  //     url('fonts/roboto-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  //     url('fonts/roboto-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  //     url('fonts/roboto-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
+  //     url('fonts/roboto-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  //     url('fonts/roboto-v15-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
 }
 
 .ui-widget-header {
@@ -150,7 +152,7 @@ $invalidInputBorderColor: #f44336;
 }
 
 .ui-slider { position: relative; text-align: left; background: #838688; border: none; -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6) inset; -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6) inset; box-shadow: 0 1px 3px rgba(0,0,0,0.6) inset;}
-.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 17px !important; height: 21px  !important; cursor: default; background: url("images/slider_handles.png") 0 0 no-repeat; outline: none; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; border: none; }
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 17px !important; height: 21px  !important; cursor: default; background: url("/images/slider_handles.png") 0 0 no-repeat; outline: none; -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; border: none; }
 .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background: #14a4ff; -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6) inset; -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6) inset; box-shadow: 0 1px 3px rgba(0,0,0,0.6) inset; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
 .ui-slider .ui-slider-handle.ui-state-active { background-position: -17px 0; }
 

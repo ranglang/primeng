@@ -54,7 +54,7 @@ export class UButton implements AfterViewInit, OnDestroy {
             let iconElement = this.renderer2.createElement('span');
             let iconPosClass = (this.iconPos === 'right') ? 'ui-button-icon-right' : 'ui-button-icon-left';
             // TODO add className
-            // iconElement.className = iconPosClass + ' ui-c fa fa-fw ' + this.icon;
+            this.domHandler.addMultipleClasses(iconElement, iconPosClass + ' ui-c fa fa-fw ' + this.icon);
             // this.el.nativeElement.appendChild(iconElement);
           this.renderer2.appendChild(this.el.nativeElement, iconElement);
         }
@@ -62,7 +62,8 @@ export class UButton implements AfterViewInit, OnDestroy {
 
         //TODO And classname
         let labelElement = this.renderer2.createElement('span');
-        // labelElement.className = 'ui-button-text ui-c';
+        this.domHandler.addMultipleClasses(labelElement, 'ui-button-text ui-c');
+        // labelElement.className = ;
         // labelElement.appendChild();
       this.renderer2.appendChild(labelElement, this.renderer2.createText(this.label || 'ui-button'))
         // this.el.nativeElement.appendChild(labelElement);
@@ -80,6 +81,8 @@ export class UButton implements AfterViewInit, OnDestroy {
                 {
                     styleClass = styleClass + ' ud-button-size-l';
                 }
+            } else if (this.category === 'export') {
+              styleClass = styleClass + ' ui-button-export';
             } else if (this.category === 'modal') {
                 styleClass = styleClass + ' ui-button-modal';
                 styleClass = styleClass + ' ud-button-size-ml';
