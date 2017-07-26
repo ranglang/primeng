@@ -15,7 +15,7 @@ gulp.task('build-css', function() {
   gulp.src('src/app/components/**/**.scss')
     .pipe(sass().on('error', sass.logError))
     .on('error', sass.logError)
-    .pipe(gulp.dest('/home/tian/udian/navi-web/src/app/styles/resource'));
+    .pipe(gulp.dest('/home/tian/udian/navi-web/src/styles/resource'));
 
   //   .pipe(sourcemaps.write('maps', {
   //     includeContent: false,
@@ -23,11 +23,14 @@ gulp.task('build-css', function() {
   //   }))
   //   .pipe(gulp.dest('resources'))
 
+  gulp.src(['src/assets/components/themes/**/*'])
+    .pipe(gulp.dest('/home/tian/udian/navi-web/src/styles/resource/themes'));
+
 	gulp.src([
         'src/app/components/common/common.css',
 		    'src/app/components/**/*.css'
     ])
-	.pipe(gulp.dest('/home/tian/udian/navi-web/src/app/styles/resource'));
+	.pipe(gulp.dest('/home/tian/udian/navi-web/src/styles/resource'));
 });
 
 gulp.task('build-css-prod', function() {

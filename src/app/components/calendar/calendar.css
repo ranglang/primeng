@@ -16,7 +16,7 @@
 .ui-calendar button:enabled:hover,
 .ui-calendar button:focus {
     border-left: 0 none;
-} 
+}
 
 /* Fluid */
 .ui-fluid .ui-calendar {
@@ -33,7 +33,7 @@
 
 /* Datepicker */
 .ui-datepicker {
-	width: 17em;
+  width: 211px;
 	padding: .2em;
 	display: none;
     position: absolute;
@@ -43,13 +43,15 @@
     position: static;
 }
 .ui-datepicker .ui-datepicker-header {
+  display: flex;
+  align-items: center;
 	position: relative;
 	padding: .2em 0;
 }
 .ui-datepicker .ui-datepicker-prev,
 .ui-datepicker .ui-datepicker-next {
 	position: absolute;
-	top: .125em;
+	top: .23em;
 	width: 1.8em;
 	height: 1.8em;
 }
@@ -79,16 +81,27 @@
 	line-height: 1.8em;
 	text-align: center;
 }
+
 .ui-datepicker .ui-datepicker-title select {
 	font-size: 1em;
-	margin: .125em 0;
+	/*margin: .125em 0;*/
 }
+
+
 .ui-datepicker select.ui-datepicker-month {
-    width: 55%;
+  width: 42%;
 }
 .ui-datepicker select.ui-datepicker-year {
-	width: 35%;
+  width: 58%;
 }
+
+/*.ui-datepicker select.ui-datepicker-month {*/
+    /*width: 55%;*/
+/*}*/
+/*.ui-datepicker select.ui-datepicker-year {*/
+	/*width: 35%;*/
+/*}*/
+
 .ui-datepicker select.ui-datepicker-month {
     margin-right: .25em;
 }
@@ -169,13 +182,13 @@
 }
 
 .ui-calendar.ui-calendar-w-btn input {
-    -moz-border-radius-topright: 0px; 
-    -webkit-border-top-right-radius: 0px; 
-    -khtml-border-top-right-radius: 0px; 
+    -moz-border-radius-topright: 0px;
+    -webkit-border-top-right-radius: 0px;
+    -khtml-border-top-right-radius: 0px;
     border-top-right-radius: 0px;
-    -moz-border-radius-bottomright: 0px; 
-    -webkit-border-bottom-right-radius: 0px; 
-    -khtml-border-bottom-right-radius: 0px; 
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    -khtml-border-bottom-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
@@ -214,4 +227,24 @@
     display: block;
     opacity: 1;
     filter:Alpha(Opacity=100);
+}
+
+.flexHour {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 51px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.ui-datepicker-title > select {
+  height: 1.8em;
+  /*background: transparent;*/
+  /*border: none;*/
 }
