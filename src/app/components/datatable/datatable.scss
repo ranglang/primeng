@@ -3,6 +3,9 @@
 
 .ui-datatable {
   position: relative;
+  .ui-widget-content {
+    border-style: none;
+  }
 }
 
 .ui-datatable table {
@@ -412,4 +415,16 @@ tr.ui-widget-content.u-tbody-tr td {
   border-style: none;
   font-size: em(14);
   color: $blackTow;
+}
+
+.paginator {
+  position: relative;
+}
+
+.totalMount {
+  position: absolute;
+  font-size: em(14);
+  color: $blackTwo;
+  left: 0;
+  bottom:em(8);
 }

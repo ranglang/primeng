@@ -68,7 +68,7 @@ export class Tooltip implements OnDestroy, AfterViewInit, OnChanges{
   // }
 
   @HostListener('blur', ['$event'])
-  onBlur(e: Event) {
+  onBlur(e) {
     console.log('e: ')
     if(this.tooltipEvent === 'focus') {
       this.hide();

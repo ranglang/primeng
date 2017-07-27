@@ -33,28 +33,28 @@ export class Tooltip implements OnDestroy {
     }
 
     @HostListener('mouseenter', ['$event'])
-    onMouseEnter(e: Event) {
+    onMouseEnter(e) {
         if(this.tooltipEvent === 'hover') {
             this.show();
         }
     }
 
     @HostListener('mouseleave', ['$event'])
-    onMouseLeave(e: Event) {
+    onMouseLeave(e) {
         if(this.tooltipEvent === 'hover') {
             this.hide();
         }
     }
 
     @HostListener('focus', ['$event'])
-    onFocus(e: Event) {
+    onFocus(e) {
         if(this.tooltipEvent === 'focus') {
             this.show();
         }
     }
 
     @HostListener('blur', ['$event'])
-    onBlur(e: Event) {
+    onBlur(e) {
         if(this.tooltipEvent === 'focus') {
             this.hide();
         }

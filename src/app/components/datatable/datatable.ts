@@ -456,11 +456,13 @@ export class UScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy
                         [ngClass]="{'ui-datatable-unfrozen-view': frozenColumns}"></div>
                 </div>
             </ng-template>
-
-            <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
-                (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></u-paginator>
-            <div class="ui-datatable-footer ui-widget-header" *ngIf="footer">
+            <div class="paginator">
+              <a class="totalMount">共{{totalRecords}}条数据结果</a>
+              <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
+                           (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></u-paginator>
+              <div class="ui-datatable-footer ui-widget-header" *ngIf="footer">
                 <ng-content select="p-footer"></ng-content>
+              </div>
             </div>
 
             <div class="ui-column-resizer-helper ui-state-highlight" style="display:none"></div>

@@ -8,6 +8,7 @@ import {SelectItem} from '../../components/common/api';
 // import {ObjectUtils} from '../../components/utils/ObjectUtils';
 import {DomHandler} from '../../components/dom/domhandler';
 import {ObjectUtils} from "../utils/objectutils";
+import {Platform} from "../platform/platform";
 
 export const DROPDOWN_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -178,7 +179,10 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
 
     public selectedOptionUpdated: boolean;
 
-    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, private cd: ChangeDetectorRef, public objectUtils: ObjectUtils) {
+    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, private cd: ChangeDetectorRef, public objectUtils: ObjectUtils,
+          public      platform: Platform
+    ) {
+
     }
 
     ngAfterContentInit() {
@@ -237,14 +241,21 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
         this.panel = <HTMLDivElement> this.panelViewChild.nativeElement;
         this.itemsWrapper = <HTMLDivElement> this.itemsWrapperViewChild.nativeElement;
 
-        this.updateDimensions();
+        if(this.platform.isBrowser) {
+          this.updateDimensions();
+        }
+
         this.initialized = true;
 
-        if (this.appendTo) {
+
+
+        if(this.platform.isBrowser) {
+          if (this.appendTo ) {
             if (this.appendTo === 'body')
-                document.body.appendChild(this.panel);
+              document.body.appendChild(this.panel);
             else
-                this.domHandler.appendChild(this.panel, this.appendTo);
+              this.domHandler.appendChild(this.panel, this.appendTo);
+          }
         }
     }
 
@@ -282,16 +293,20 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
         }
 
         if (this.optionsChanged) {
+          if(this.platform.isBrowser) {
             this.alignPanel();
+          }
             this.optionsChanged = false;
         }
 
-        if (this.selectedOptionUpdated && this.itemsWrapper) {
+        if(this.platform.isBrowser) {
+          if (this.selectedOptionUpdated && this.itemsWrapper) {
             let selectedItem = this.domHandler.findSingle(this.panel, 'li.ui-state-highlight');
             if (selectedItem) {
-                this.domHandler.scrollInView(this.itemsWrapper, this.domHandler.findSingle(this.panel, 'li.ui-state-highlight'));
+              this.domHandler.scrollInView(this.itemsWrapper, this.domHandler.findSingle(this.panel, 'li.ui-state-highlight'));
             }
             this.selectedOptionUpdated = false;
+          }
         }
     }
 

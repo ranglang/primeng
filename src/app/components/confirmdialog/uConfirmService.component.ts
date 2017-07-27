@@ -13,6 +13,7 @@ import {SharedModule, Footer} from '../../components/common/shared';
 // import {DomHandler} from '../../dom/domhandler';
 // import {DomHandler} from './dom/domHandler';
 import {UButtonModule} from '../button/uButton';
+import {Platform} from "../platform/platform";
 
 @Component({
   selector: 'u-p-confirmDialog',
@@ -118,6 +119,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
 
 
   constructor(public el: ElementRef, public domHandler: DomHandler,
+              private platform: Platform,
               public renderer: Renderer, private confirmationService: ConfirmationService) {
     if(this.confirmationService) {
 
@@ -170,8 +172,10 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
   }
 
   ngAfterViewInit() {
+    if ( !this.platform.isBrowser) {
+      return ;
+    }
     this.contentContainer = this.domHandler.findSingle(this.el.nativeElement, '.ui-dialog-content');
-
     if(this.responsive) {
       this.documentResponsiveListener = this.renderer.listenGlobal('window', 'resize', (event) => {
         this.center();
