@@ -130,9 +130,9 @@ $invalidInputBorderColor: #f44336;
                 color: #555555;
             }
 
-            &:not(.ui-state-active):not(.ui-state-disabled):hover {
-                background: #ededf0;
-            }
+            //&:not(.ui-state-active):not(.ui-state-disabled):hover {
+            //    background: #ededf0;
+            //}
          }
     }
 }
@@ -275,7 +275,7 @@ $invalidInputBorderColor: #f44336;
 
     tbody {
         > tr.ui-widget-content {
-            border-color: #d9d9d9;
+            //border-color: #d9d9d9;
 
             &.ui-datatable-odd {
                 background-color: #fafafb;
@@ -414,9 +414,9 @@ $invalidInputBorderColor: #f44336;
                 color: #555555;
             }
 
-            &:not(.ui-state-active):not(.ui-state-disabled):hover {
-                background: #ededf0;
-            }
+            //&:not(.ui-state-active):not(.ui-state-disabled):hover {
+            //    background: #ededf0;
+            //}
          }
     }
 }

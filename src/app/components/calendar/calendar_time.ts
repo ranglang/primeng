@@ -3,7 +3,7 @@
 import {NgModule,Component,ElementRef,AfterViewInit,AfterViewChecked,OnDestroy,OnInit,Input,Output,SimpleChange,EventEmitter,forwardRef,Renderer2,ViewChild,ChangeDetectorRef} from '@angular/core';
 import {trigger,state,style,transition,animate} from '@angular/animations';
 import {CommonModule} from '@angular/common';
-import {AbstractControl, NG_VALUE_ACCESSOR, NG_VALIDATORS, ControlValueAccessor} from '@angular/forms';
+import {AbstractControl, NG_VALUE_ACCESSOR, NG_VALIDATORS, ControlValueAccessor, FormsModule} from '@angular/forms';
 import {DomHandler} from "../dom/domhandler";
 import {ButtonModule} from "../button/button";
 
@@ -86,8 +86,10 @@ export interface LocaleSettings {
                             <span class="fa fa-angle-up"></span>
                         </a>
                       
-                         <span (click)="showHourOverlay(1)"
-                           [ngStyle]="{'display': currentHour < 10 ? 'inline': 'none'}">0</span><span (click)="showHourOverlay(1)">{{currentHour}}</span>
+                         <!--<span (click)="showHourOverlay(1)"-->
+                           <!--[ngStyle]="{'display': currentHour < 10 ? 'inline': 'none'}">0</span>-->
+                      <span (click)="showHourOverlay(1)">
+                           <input  #hour type="number" [(ngModel)]="currentHour" maxlength="2" (input)="setInputHour($event)"/> </span>
                         <!--<span [ngStyle]="{'display': currentHour < 10 ? 'inline': 'none'}">0</span><span>{{currentHour}}</span>-->
                         <a href="#" (click)="decrementHour($event)">
                             <span class="fa fa-angle-down"></span>
@@ -106,7 +108,9 @@ export interface LocaleSettings {
                         <a href="#" (click)="incrementMinute($event)">
                             <span class="fa fa-angle-up"></span>
                         </a>
-                        <span (click)="showHourOverlay(2)" [ngStyle]="{'display': currentMinute < 10 ? 'inline': 'none'}">0</span><span  (click)="showHourOverlay(2)">{{currentMinute}}</span>
+                        <!--<span (click)="showHourOverlay(2)" [ngStyle]="{'display': currentMinute < 10 ? 'inline': 'none'}">0</span>-->
+                      <span  (click)="showHourOverlay(2)">
+                        <input #minute type="number" (input)="setInputMinute($event)" maxlength="2"  [(ngModel)]="currentMinute"/> </span>
                         <a href="#" (click)="decrementMinute($event)">
                             <span class="fa fa-angle-down"></span>
                         </a>
@@ -202,6 +206,30 @@ export class Calendar implements AfterViewInit,AfterViewChecked,OnInit,OnDestroy
     }
   }
 
+  setInputHour(event) {
+    const a = event.target.value;
+    // this.currentHour =
+    if(a> 0 &&  a<24) {
+      this.currentHour = a;
+    }
+    this.updateTime();
+    if(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    } }
+
+  setInputMinute(event) {
+    const a = event.target.value;
+    // this.currentHour =
+    if(a> 0 &&  a < 60) {
+      this.currentMinute  = a;
+    }
+    this.updateTime();
+    if(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
 
 
   setMinute(minute: number) {
@@ -890,9 +918,11 @@ export class Calendar implements AfterViewInit,AfterViewChecked,OnInit,OnDestroy
 
     let val = event.target.value;
     try {
-      this.value = this.parseValueFromString(val);
-      this.updateUI();
-      this._isValid = true;
+      if(val.length ===4) {
+        this.value = this.parseValueFromString(val);
+        this.updateUI();
+        this._isValid = true;
+      }
     }
     catch(err) {
       //invalid date
@@ -906,31 +936,45 @@ export class Calendar implements AfterViewInit,AfterViewChecked,OnInit,OnDestroy
   }
 
   parseValueFromString(text: string): Date {
+    console.log('parseValueFromString: ' + text);
     if(!text || text.trim().length === 0) {
       return null;
     }
 
     let dateValue;
-    let parts: string[] = text.split(' ');
+    // let parts: string[] = text.split(' ');
+    let a = text.slice(0, 2);
+    let b = text.slice(2);
+    console.log('a.......: ' + a);
+    console.log('b..............: ' + b);
 
     if(this.timeOnly) {
+
       dateValue = new Date();
-      this.populateTime(dateValue, parts[0], parts[1]);
+      console.log('dateValue: ' + dateValue);
+
+      dateValue.setHours(Number(a));
+      console.log('setHour:' + dateValue);
+      dateValue.setMinutes(Number(b));
+      console.log(dateValue);
+      // this.populateTime(dateValue, a, b);
     }
-    else {
-      if(this.showTime) {
-        dateValue = this.parseDate(parts[0], this.dateFormat);
-        this.populateTime(dateValue, parts[1], parts[2]);
-      }
-      else {
-        dateValue = this.parseDate(text, this.dateFormat);
-      }
-    }
+    console.log('dateValue');
+    // else {
+    //   if(this.showTime) {
+    //     dateValue = this.parseDate(parts[0], this.dateFormat);
+    //     this.populateTime(dateValue, parts[1], parts[2]);
+    //   }
+    //   else {
+    //     dateValue = this.parseDate(text, this.dateFormat);
+    //   }
+    // }
 
     return dateValue;
   }
 
   populateTime(value, timeString, ampm) {
+    console.log('populateTime');
     if(this.hourFormat == '12' && !ampm) {
       throw 'Invalid Time';
     }
@@ -1354,7 +1398,7 @@ export class Calendar implements AfterViewInit,AfterViewChecked,OnInit,OnDestroy
 }
 
 @NgModule({
-  imports: [CommonModule,ButtonModule],
+  imports: [CommonModule,ButtonModule, FormsModule],
   exports: [Calendar,ButtonModule],
   declarations: [Calendar]
 })

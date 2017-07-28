@@ -240,11 +240,18 @@
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .ui-datepicker-title > select {
   height: 1.8em;
   /*background: transparent;*/
   /*border: none;*/
+}
+
+.ui-hour-picker span input {
+  width: 42px;
+}
+
+.ui-minute-picker span input {
+  width: 42px;
 }
