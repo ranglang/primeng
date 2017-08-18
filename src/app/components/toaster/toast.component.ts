@@ -12,18 +12,13 @@ import {BodyOutputType} from './bodyOutputType';
     template: `
         <!--<i class="toaster-icon" ></i>-->
         <div class="toast-content">
-        <!--fa fa-check-circle-->
-            <i class=" msgIcon iconSize " [ngClass]="iconClass" aria-hidden="true"></i>
-            <!--<div [ngClass]="toast.toasterConfig.titleClass">{{toast.title}}</div>-->
-            <div [ngClass]="toast.toasterConfig.messageClass" [ngSwitch]="toast.bodyOutputType">
+            <i class="msgIcon iconSize " [ngClass]="iconClass" aria-hidden="true"></i>
+            <div class="green_success" [ngClass]="toast.toasterConfig.messageClass" [ngSwitch]="toast.bodyOutputType">
                 <div *ngSwitchCase="bodyOutputType.Component" #componentBody></div>
                 <div *ngSwitchCase="bodyOutputType.TrustedHtml" [innerHTML]="toast.body"></div>
                 <div *ngSwitchCase="bodyOutputType.Default" class="msgWords">{{toast.body}}</div>
             </div>
         </div>
-        <!--<div class="toast-close-button" *ngIf="toast.showCloseButton" (click)="click($event, toast)"-->
-            <!--[innerHTML]="safeCloseHtml">-->
-        <!--</div>-->
         `,
     outputs: ['clickEvent']
 })

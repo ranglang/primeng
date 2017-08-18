@@ -58,10 +58,13 @@ button.toast-close-button {
   border: 0;
   -webkit-appearance: none;
 }
+
 .toast-content {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: space-around;
   width: 95%;
 }
+
 .toast-top-full-width {
   top: 0;
   right: 0;
@@ -134,8 +137,13 @@ button.toast-close-button {
 
 #toast-container > div {
   margin: 0 0 6px;
-  width: 600px;
-  height: 380px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  width: 279px;
+  height: 84px;
   background-color: rgb(255, 255, 255);
 
   -moz-border-radius: 3px 3px 3px 3px;
@@ -278,4 +286,8 @@ button.toast-close-button {
 :not(.no-leave)#toast-container > div.ng-leave.ng-leave-active,
 :not(.no-enter)#toast-container > div.ng-enter {
     opacity: 0;
+}
+
+.green_success {
+  color: rgb(0,197,115);
 }

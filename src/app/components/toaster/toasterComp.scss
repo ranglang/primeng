@@ -24,6 +24,8 @@
   font-weight: bold;
 }
 .toast-message {
+  display: flex;
+  align-items: center;
   -ms-word-wrap: break-word;
   word-wrap: break-word;
 }
@@ -71,9 +73,9 @@ button.toast-close-button {
   -webkit-appearance: none;
 }
 .toast-content {
-  //display: inline-block;
-  //width: 95%;
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-around;
   text-align: center;
   width: 100%;
 }
@@ -288,8 +290,8 @@ button.toast-close-button {
 }
 
 .msgIcon {
-  width: 85px;
-  height: 85px;
+  width: 44px;
+  height: 44px;
 }
 
 .fa-times-circle {
@@ -305,15 +307,15 @@ button.toast-close-button {
 }
 
 .iconSize {
-  font-size: 85px;
-  margin-top: 122px;
+  font-size: 44px;
+  //margin-top: 122px;
 }
 
 
 .msgWords {
   font-size: 28px;
   line-height: 30px;
-  margin-top: 20px;
+  //margin-top: 20px;
   color: $primaryBlack;
 }
 
