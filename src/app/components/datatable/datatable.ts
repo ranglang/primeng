@@ -457,7 +457,7 @@ export class UScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy
                 </div>
             </ng-template>
             <div class="paginator">
-              <a class="totalMount">共{{totalRecords}}条数据结果</a>
+              <a class="totalMount" *ngIf="totalRecords && totalRecords >0 ">共{{totalRecords}}条数据结果</a>
               <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
                            (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></u-paginator>
               <div class="ui-datatable-footer ui-widget-header" *ngIf="footer">

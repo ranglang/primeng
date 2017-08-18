@@ -212,16 +212,26 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
         this._options = opts;
         this.optionsToDisplay = this._options;
 
+        console.log('options......');
         if (this.hasDefault) {
+
+          console.log('this.value: ' + this.value);
             if (this._options && !this.value) {
+                console.log('hasDefault' + (opts as any).value);
+                console.log('hasDefault: optionsToDisplay.lenght')
                 let r = this.optionsToDisplay.filter((res) => {
-                    return (res as any).isDefault === 1;
+                    console.log('hasDefault' + (res as any).isDefault);
+                    return (res as any).isDefault === 1 || (res as any).isDefault;
                 });
+                console.log('hasDefault r.length: ' + r.length)
                 if (r.length > 0) {
                     this.value = r[0].value;
                     let value = r[0].value;
+                    console.log('hasDefault r.length: ' + value)
+
                     setTimeout(() => {
                         this.onModelChange(value);
+                        console.log('hasDefault : ' + value)
                         this.onChange.emit({
                             value: value
                         });

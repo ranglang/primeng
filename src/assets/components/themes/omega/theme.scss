@@ -281,10 +281,10 @@ $invalidInputBorderColor: #f44336;
                 background-color: #fafafb;
             }
 
-            &.ui-state-highlight {
-                background-color: $stateHighlightBgColor;
-                color: $stateHighlightTextColor;
-            }
+            //&.ui-state-highlight {
+            //    background-color: $stateHighlightBgColor;
+            //    color: $stateHighlightTextColor;
+            //}
         }
     }
 

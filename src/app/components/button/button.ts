@@ -11,9 +11,9 @@ import {
 } from '@angular/core';
 // import {DomHandler} from '../dom/domhandler';
 import {CommonModule} from '@angular/common';
-import {Platform} from "../platform/platform";
-import {PlatformModule} from "../platform/index";
-import {DomHandler} from "../dom/domhandler";
+import {Platform} from '../platform/platform';
+import {PlatformModule} from '../platform/index';
+import {DomHandler} from '../dom/domhandler';
 
 @Directive({
   selector: '[pButton]',
@@ -42,7 +42,7 @@ export class Button implements AfterViewInit, OnDestroy {
     let a = this._renderer2.createText(this.label || 'ui-btn');
 
     if(this.icon) {
-      // let iconElement = document.createElement("span");
+      // let iconElement = document.createElement('span');
       this.icon_span = this._renderer2.createElement('span');
       let iconPosClass = (this.iconPos === 'right') ? 'ui-button-icon-right': 'ui-button-icon-left';
       this.domHandler.addMultipleClasses(this.icon_span, iconPosClass  + ' ui-c fa fa-fw ' + this.icon);

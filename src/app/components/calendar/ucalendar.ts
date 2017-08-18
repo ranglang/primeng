@@ -802,11 +802,13 @@ export class Calendar implements AfterViewInit, AfterViewChecked, OnInit, OnDest
   onMonthDropdownChange(m: string) {
     this.currentMonth = parseInt(m);
     this.createMonth(this.currentMonth, this.currentYear);
+    this.updateModel();
   }
 
   onYearDropdownChange(y: string) {
     this.currentYear = parseInt(y);
     this.createMonth(this.currentMonth, this.currentYear);
+    this.updateModel();
   }
 
   incrementHour(event) {
