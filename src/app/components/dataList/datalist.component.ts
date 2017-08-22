@@ -13,7 +13,7 @@ import {UPaginatorModule} from '../../components/paginator/paginator';
 @Component({
     selector: 'u-dataList',
     template: `
-        <div [ngClass]="'ui-datalist ui-widget'" [ngStyle]="style" [class]="styleClass">
+        <div [ngClass]="'ui-datalist ui-widget ui-margin-top-little'" [ngStyle]="style" [class]="styleClass">
             <div class="ui-datalist-header ui-widget-header ui-corner-top" *ngIf="header">
                 <ng-content select="p-header"></ng-content>
             </div>

@@ -39,13 +39,16 @@
 }
 
 .ui-widget-content {
-    border: $contentBorderWidth solid $contentBorderColor;
+    //border: $contentBorderWidth solid $contentBorderColor;
     background: $contentBgColor;
     color: $contentTextColor;
-
     a {
         color: $contentTextColor;
     }
+}
+
+.ui-margin-top-little {
+  margin-top: 12px;
 }
 
 .ui-widget-header {
