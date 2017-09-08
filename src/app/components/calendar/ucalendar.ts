@@ -549,7 +549,6 @@ export class Calendar implements AfterViewInit, AfterViewChecked, OnInit, OnDest
   }
 
   onDateSelect(event, dateMeta) {
-    console.log(dateMeta);
     if (this.disabled || !dateMeta.selectable) {
       event.preventDefault();
       return;

@@ -90,10 +90,7 @@ export class ToasterContainerComponent {
     // private functions
     private registerSubscribers() {
         this.addToastSubscriber = this.toasterService.addToast.subscribe((toast: Toast) => {
-            console.log('toaster');
-            console.log(toast);
             this.addToast(toast);
-            console.log('this.toasts.length: ' + this.toasts.length);
         });
 
         this.clearToastsSubscriber = this.toasterService.clearToasts.subscribe((clearWrapper: IClearWrapper) => {
@@ -103,7 +100,6 @@ export class ToasterContainerComponent {
 
     private addToast(toast: Toast) {
       if(!this.platform.isBrowser) return;
-      console.log('addToast; /////////////////////////////////')
         toast.toasterConfig = this.toasterconfig;
 
         if (toast.toastContainerId && this.toasterconfig.toastContainerId

@@ -20,7 +20,6 @@ export class Tooltip implements OnDestroy, AfterViewInit, OnChanges{
 
   ngAfterViewInit(): void {
     // throw new Error("Method not implemented.");
-    console.log('this.show()');
     this.show();
   }
 
@@ -69,7 +68,6 @@ export class Tooltip implements OnDestroy, AfterViewInit, OnChanges{
 
   @HostListener('blur', ['$event'])
   onBlur(e) {
-    console.log('e: ')
     if(this.tooltipEvent === 'focus') {
       this.hide();
     }
@@ -82,15 +80,10 @@ export class Tooltip implements OnDestroy, AfterViewInit, OnChanges{
     }
 
     this.create();
-    console.log('after create');
 
-    console.log(this.container.style.left);
-    console.log(this.container.style.top);
 
     let offset = this.el.nativeElement.getBoundingClientRect();
 
-   console.log('offset.top' + offset.top);
-    console.log('offset.left' + offset.left);
 
     let targetTop = offset.top + this.domHandler.getWindowScrollTop();
     let targetLeft = offset.left + this.domHandler.getWindowScrollLeft();

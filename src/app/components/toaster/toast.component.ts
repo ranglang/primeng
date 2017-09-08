@@ -16,7 +16,7 @@ import {BodyOutputType} from './bodyOutputType';
             <div class="green_success" [ngClass]="toast.toasterConfig.messageClass" [ngSwitch]="toast.bodyOutputType">
                 <div *ngSwitchCase="bodyOutputType.Component" #componentBody></div>
                 <div *ngSwitchCase="bodyOutputType.TrustedHtml" [innerHTML]="toast.body"></div>
-                <div *ngSwitchCase="bodyOutputType.Default" class="msgWords">{{toast.body}}</div>
+                <div *ngSwitchCase="bodyOutputType.Default" [ngClass]="'t_'+iconClass" class="msgWords">{{toast.body}}</div>
             </div>
         </div>
         `,

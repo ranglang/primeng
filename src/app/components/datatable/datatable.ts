@@ -20,8 +20,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {UPaginatorModule} from '../paginator/paginator';
 import {ObjectUtils} from "../utils/objectutils";
 
-//
-//
 @Component({
   selector: 'u-dtRadioButton',
   template: `
@@ -457,7 +455,7 @@ export class UScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy
                 </div>
             </ng-template>
             <div class="paginator">
-              <a class="totalMount" *ngIf="totalRecords && totalRecords >0 ">共{{totalRecords}}条数据结果</a>
+              <span class="totalMount" *ngIf="totalRecords && totalRecords >0 ">共{{totalRecords}}条数据结果</span>
               <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" styleClass="ui-paginator-bottom"
                            (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator && paginatorPosition!='top' || paginatorPosition =='both'"></u-paginator>
               <div class="ui-datatable-footer ui-widget-header" *ngIf="footer">
@@ -566,7 +564,7 @@ export class UDataTable implements AfterViewChecked,AfterViewInit,AfterContentIn
 
   @Input() exportFilename: string = 'download';
 
-  @Input() emptyMessage: string = 'No records found';
+  @Input() emptyMessage: string = '查询结果为空';
 
   @Input() paginatorPosition: string = 'bottom';
 

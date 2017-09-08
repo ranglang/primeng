@@ -51,7 +51,7 @@ export class DataList implements AfterViewInit,AfterContentInit,DoCheck,Blockabl
 
     @Input() paginatorPosition: string = 'bottom';
 
-    @Input() emptyMessage: string = 'No records found';
+    @Input() emptyMessage: string = '查询结果为空';
 
     @Input() alwaysShowPaginator: boolean = true;
 

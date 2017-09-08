@@ -288,15 +288,12 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
     }
 
     if(value.length >= this.minLength) {
-      console.log('value:' + value);
       //Cancel the search request if user types within the timeout
       if(this.timeout) {
-        console.log('cancle the TImeout');
         clearTimeout(this.timeout);
       }
 
       this.timeout = setTimeout(() => {
-        console.log('timeout trigger')
         this.search(event, value);
         this.cd.markForCheck();
       }, this.delay);
@@ -327,8 +324,6 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
     } else {
       this.suggestions = this._options;
     }
-    console.log('this.suggestions');
-    console.log(this.suggestions);
 
     this.completeMethod.emit({
       originalEvent: event,
@@ -551,14 +546,11 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
   bindDocumentClickListener() {
     if(!this.documentClickListener) {
       this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
-        console.log('event');
         if(event.which === 3) {
           return;
         }
 
-        console.log('..........');
         let key = this.field ? this.objectUtils.resolveFieldData(this.value, this.field): this.value;
-        console.log('key:' + key);
         if (key !== this.inputEL.nativeElement.value) {
           this.inputEL.nativeElement.value = '';
         }

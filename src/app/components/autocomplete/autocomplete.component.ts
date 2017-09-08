@@ -236,13 +236,16 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
 
     ngAfterViewInit() {
         this.documentClickListener = this.renderer.listenGlobal('document', 'click', (e) => {
-            if(this.inputClick)
-                this.inputClick = false;
+            if(this.inputClick) {
+              this.inputClick = false;
+            }
             else {
               let hasBaMap = false;
               if(e.target.tagName === 'svg') {
                 hasBaMap = true;
-              }else {
+              } else if( e.target.tagName === 'path'){
+                hasBaMap = false;
+              } else {
                 if(e.target.className) {
                   if(e.target.className.indexOf('BMap') !== -1){
                     hasBaMap = true;
@@ -259,14 +262,6 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
                   }else {
                     this.inputEL.nativeElement.value = '';
                   }
-
-                    // TODO  when you hide;
-                    //  if(!this.value) {
-                    //    console.log('this.value');
-                    //    this.inputEL.nativeElement.value = '';
-                    //  }else {
-                    //    console.log('this.value' + this.value);
-                    //  }
                     this.hide();
                 }
             }

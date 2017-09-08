@@ -102,7 +102,6 @@ export class Button implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('ngOnDestroy');
     // data;
     this._renderer2.removeChild(this.el.nativeElement, this.span);
     if(this.icon_span) {

@@ -24,7 +24,6 @@ export class InputText implements DoCheck {
     //To trigger change detection to manage ui-state-filled for material labels when there is no value binding
     @HostListener('input', ['$event'])
     onInput(e) {
-        console.log('onInput');
         this.updateFilledState();
     }
 

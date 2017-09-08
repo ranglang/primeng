@@ -233,9 +233,11 @@ button.toast-close-button {
 }
 .toast-wait {
   background-color: #2f96b4;
+
 }
 .toast-warning {
-  background-color: #f89406;
+  //background-color: #f89406;
+  color: #bd362f;
 }
 /*Responsive Design*/
 @media all and (max-width: 240px) {
@@ -313,10 +315,10 @@ button.toast-close-button {
 
 
 .msgWords {
-  font-size: 28px;
-  line-height: 30px;
-  //margin-top: 20px;
-  color: $primaryBlack;
+  line-height: 16px;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  height: 16px;
 }
 
 

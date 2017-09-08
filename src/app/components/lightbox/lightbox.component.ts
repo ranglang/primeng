@@ -79,12 +79,10 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer,
               private cd: ChangeDetectorRef
   ) {
-    console.log('constructor');
 
   }
 
   onImageClick(event,image,i,content) {
-    console.log('onImageClick');
     this.index = i;
     this.loading = true;
     content.style.width = 32 + 'px';
@@ -124,14 +122,11 @@ export class Lightbox implements AfterViewInit,OnDestroy{
     setTimeout(() => {
       this.currentImage = image;
       this.captionText = image.title;
-      console.log('this.currentImage');
-      console.log(this.currentImage);
       this.cd.markForCheck();
     }, 1000);
   }
 
   show() {
-    console.log('show');
     this.mask = document.createElement('div');
     this.mask.style.zIndex = ++DomHandler.zindex;
     this.domHandler.addMultipleClasses(this.mask, 'ui-widget-overlay ui-dialog-mask ud-modal-image');
@@ -159,7 +154,6 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   }
 
   center() {
-    console.log('center');
     let elementWidth = this.domHandler.getOuterWidth(this.panel);
     let elementHeight = this.domHandler.getOuterHeight(this.panel);
     if(elementWidth == 0 && elementHeight == 0) {
@@ -179,14 +173,11 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   }
 
   onImageLoad(event,content) {
-    console.log('onImageLoad');
     let image = event.target;
     image.style.visibility = 'hidden';
     image.style.display = 'block';
     let imageWidth = this.domHandler.getOuterWidth(image);
     let imageHeight = this.domHandler.getOuterHeight(image);
-    console.log('imageWidth: ' + imageWidth);
-    console.log('imageHeight: ' + imageHeight);
     // image.style.display = 'none';
     image.style.display = 'block';
     image.style.visibility = 'visible';
