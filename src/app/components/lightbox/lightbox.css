@@ -39,7 +39,7 @@
 .ui-paginator .ui-paginator-current,
 .ui-paginator .ui-paginator-rpp-options {
   margin-left: 1em;
-  margin-right: 1em;
+  /*margin-right: 1em;*/
   background-image: none;
 }
 

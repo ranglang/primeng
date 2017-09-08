@@ -14,13 +14,16 @@ import {UPaginatorModule} from '../../components/paginator/paginator';
     selector: 'u-dataList',
     template: `
         <div [ngClass]="'ui-datalist ui-widget ui-margin-top-little'" [ngStyle]="style" [class]="styleClass">
-            <div class="ui-datalist-header ui-widget-header ui-corner-top" *ngIf="header">
+          
+            <div class="ui-datalist-header ui-widget-header ui-corner-top" *ngIf="header && !isEmpty()">
                 <ng-content select="p-header"></ng-content>
             </div>
             <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" 
             (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator  && paginatorPosition!='bottom' || paginatorPosition =='both'"></u-paginator>
             <div class="ui-datalist-content ui-widget-content">
-                <div *ngIf="isEmpty()" class="ui-datalist-emptymessage">{{emptyMessage}}</div>
+                <div *ngIf="isEmpty()" class="ui-datalist-emptymessage">
+                  <div class="emptyIcon"></div>
+                  {{emptyMessage}}</div>
                 <ul class="ui-datalist-data">
                     <li *ngFor="let item of dataToRender;let i = index;trackBy: trackBy">
                         <ng-template [pTemplateWrapper]="itemTemplate" [item]="item" [index]="i"></ng-template>

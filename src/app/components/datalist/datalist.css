@@ -23,9 +23,14 @@
 
 .ui-datalist .ui-datalist-data > li {
     list-style-type: none;
-    
+
+}
+
+.emptyIcon {
+  margin-right: 20px;
 }
 
 .ui-datalist .ui-datalist-emptymessage {
     padding: .5em .75em;
+    color: rgb(150,150,150);
 }

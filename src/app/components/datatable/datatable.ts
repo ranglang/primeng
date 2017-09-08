@@ -152,6 +152,7 @@ export class UColumnFooters {
 @Component({
   selector: '[uTableBody]',
   template: `
+        <!--<div *ngIf="!dt.isEmpty()">-->
         <ng-template ngFor let-rowData [ngForOf]="dt.dataToRender" let-even="even" let-odd="odd" let-rowIndex="index">
             <tr #rowGroupElement class="ui-widget-header ui-rowgroup-header "
                 *ngIf="dt.rowGroupMode=='subheader' && (rowIndex === 0||(dt.resolveFieldData(rowData,dt.groupField) !== dt.resolveFieldData(dt.dataToRender[rowIndex - 1], dt.groupField)))"
@@ -203,7 +204,7 @@ export class UColumnFooters {
                 </td>
             </tr>
         </ng-template>
-
+        <!--</div>-->
         <tr *ngIf="dt.isEmpty()" class="ui-widget-content">
             <td [attr.colspan]="dt.visibleColumns().length" class="ui-datatable-emptymessage">{{dt.emptyMessage}}</td>
         </tr>
