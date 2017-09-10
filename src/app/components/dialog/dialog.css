@@ -20,10 +20,15 @@
 }
 
 .ui-dialog .ui-dialog-buttonpane button {
-    margin: .5em .4em .5em 0;
+    margin: .5em .4em 0 0;
     cursor: pointer;
     float: right;
 }
+
+.ui-dialog .ui-dialog-buttonpane button:not(:first-child) {
+  margin-right: 2em;
+}
+
 .ui-dialog .ui-resizable-se {
     width: 14px;
     height: 14px;

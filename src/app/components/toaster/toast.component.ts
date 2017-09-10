@@ -12,7 +12,9 @@ import {BodyOutputType} from './bodyOutputType';
     template: `
         <!--<i class="toaster-icon" ></i>-->
         <div class="toast-content">
-            <i class="msgIcon iconSize " [ngClass]="iconClass" aria-hidden="true"></i>
+            <div class="fix-width-icon">
+              <i class="msgIcon iconSize " [ngClass]="iconClass" aria-hidden="true"></i>
+            </div>
             <div class="green_success" [ngClass]="toast.toasterConfig.messageClass" [ngSwitch]="toast.bodyOutputType">
                 <div *ngSwitchCase="bodyOutputType.Component" #componentBody></div>
                 <div *ngSwitchCase="bodyOutputType.TrustedHtml" [innerHTML]="toast.body"></div>
