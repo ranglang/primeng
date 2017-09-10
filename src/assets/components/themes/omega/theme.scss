@@ -537,7 +537,8 @@ $invalidInputBorderColor: #f44336;
 
 /* Dialog */
 .ui-dialog.ui-widget .ui-dialog-titlebar {
-    padding: 1em 1.5em;
+    //padding: 1em 1.5em;
+  padding: 2em .75em .5em .75em;
 }
 
 .ui-dialog.ui-widget .ui-dialog-titlebar .ui-dialog-title {

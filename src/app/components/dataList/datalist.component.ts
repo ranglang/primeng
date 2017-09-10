@@ -15,7 +15,7 @@ import {UPaginatorModule} from '../../components/paginator/paginator';
     template: `
         <div [ngClass]="'ui-datalist ui-widget ui-margin-top-little'" [ngStyle]="style" [class]="styleClass">
           
-            <div class="ui-datalist-header ui-widget-header ui-corner-top" *ngIf="header && !isEmpty()">
+            <div class="ui-datalist-header ui-widget-header ui-corner-top" *ngIf="header && !(hideHeaderIfEmpty && isEmpty())">
                 <ng-content select="p-header"></ng-content>
             </div>
             <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" 
@@ -43,6 +43,8 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
     @Input() paginator: boolean;
 
     @Input() rows: number;
+
+    @Input() hideHeaderIfEmpty  =false;
 
     @Input() totalRecords: number;
 

@@ -3,7 +3,8 @@
     padding: 0;
 }
 .ui-dialog .ui-dialog-titlebar {
-	padding: .5em .75em;
+	/*padding: .5em .75em;*/
+    padding: 2em .75em .5em .75em;
     position: relative;
     border: 0;
 }
