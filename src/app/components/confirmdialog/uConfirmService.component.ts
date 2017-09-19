@@ -23,9 +23,10 @@ import {Platform} from "../platform/platform";
       [ngClass]="{'ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all-10 u-ui-shadow':true,'ui-dialog-rtl':rtl}"
       [style.display]="visible ? 'block' : 'none'" [style.width.px]="width" [style.height.px]="height"
       (mousedown)="moveOnTop()" [@dialogState]="visible ? 'visible' : 'hidden'">
-      <div #content>
-        <ng-content></ng-content>
-      </div>
+      
+      <!--<div #content>-->
+        <ng-content select="[a]"></ng-content>
+      <!--</div>-->
 
       <div class="confirmContent">
         <div class="faMessage" *ngIf="header">{{message}}</div>
@@ -94,7 +95,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
 
   @ContentChild(Footer) footer;
 
-  @ViewChild('content') contentViewChild: ElementRef;
+  // @ViewChild('content') contentViewChild: ElementRef;
 
 
   confirmation: Confirmation;

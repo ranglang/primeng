@@ -133,6 +133,8 @@ export class Tooltip implements OnDestroy {
 
         this.container.appendChild(tooltipText);
 
+        console.log('this.appenChild: ' + this.appendTo);
+
         if(this.appendTo === 'body')
             document.body.appendChild(this.container);
         else if(this.appendTo === 'target')
