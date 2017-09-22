@@ -34,13 +34,24 @@ export class Tooltip implements OnDestroy {
 
     @HostListener('mouseenter', ['$event'])
     onMouseEnter(e) {
+      console.log('onMouseEnter');
         if(this.tooltipEvent === 'hover') {
             this.show();
         }
     }
 
+  @HostListener('click', ['$event'])
+  onClick(e) {
+    // console.log('onMouseLeave');
+    console.log('click');
+    // if(this.tooltipEvent === 'hover') {
+    //   this.hide();
+    // }
+  }
+
     @HostListener('mouseleave', ['$event'])
     onMouseLeave(e) {
+      console.log('onMouseLeave');
         if(this.tooltipEvent === 'hover') {
             this.hide();
         }
@@ -55,13 +66,15 @@ export class Tooltip implements OnDestroy {
 
     @HostListener('blur', ['$event'])
     onBlur(e) {
+      console.log('focus');
+      console.log('onBlur');
         if(this.tooltipEvent === 'focus') {
             this.hide();
         }
     }
 
     show() {
-        if(!this.text || this.disabled) {
+        if(!this.text || this.disabled || this.container) {
             return;
         }
 
@@ -144,7 +157,11 @@ export class Tooltip implements OnDestroy {
     }
 
     ngOnDestroy() {
+
+      console.log('ngOnDestroy');
+
         if(this.container && this.container.parentElement) {
+          console.log('has Container');
             if(this.appendTo === 'body')
                 document.body.removeChild(this.container);
             else if(this.appendTo === 'target')
@@ -152,6 +169,7 @@ export class Tooltip implements OnDestroy {
             else
                 this.domHandler.removeChild(this.container, this.appendTo);
         }
+        console.log('remove container: ');
         this.container = null;
     }
 }

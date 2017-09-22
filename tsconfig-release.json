@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "/home/tian/udian/navi-web/src/components",
+    "outDir": "/home/tian/udian/resource/src/components",
     "target": "es5",
     "module": "es2015",
     "baseUrl": "src",
