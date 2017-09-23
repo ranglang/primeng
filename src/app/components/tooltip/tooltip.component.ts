@@ -38,6 +38,10 @@ export class Tooltip implements OnDestroy {
         if(this.tooltipEvent === 'hover') {
             this.show();
         }
+         if (this.tooltipEvent === 'focus') {
+          this.show();
+      }
+
     }
 
   @HostListener('click', ['$event'])
@@ -55,6 +59,11 @@ export class Tooltip implements OnDestroy {
         if(this.tooltipEvent === 'hover') {
             this.hide();
         }
+
+      if(this.tooltipEvent === 'focus') {
+        this.hide();
+      }
+
     }
 
     @HostListener('focus', ['$event'])
