@@ -34,7 +34,6 @@ export class Tooltip implements OnDestroy {
 
     @HostListener('mouseenter', ['$event'])
     onMouseEnter(e) {
-      console.log('onMouseEnter');
         if(this.tooltipEvent === 'hover') {
             this.show();
         }
@@ -46,8 +45,6 @@ export class Tooltip implements OnDestroy {
 
   @HostListener('click', ['$event'])
   onClick(e) {
-    // console.log('onMouseLeave');
-    console.log('click');
     // if(this.tooltipEvent === 'hover') {
     //   this.hide();
     // }
@@ -55,7 +52,6 @@ export class Tooltip implements OnDestroy {
 
     @HostListener('mouseleave', ['$event'])
     onMouseLeave(e) {
-      console.log('onMouseLeave');
         if(this.tooltipEvent === 'hover') {
             this.hide();
         }
@@ -75,8 +71,6 @@ export class Tooltip implements OnDestroy {
 
     @HostListener('blur', ['$event'])
     onBlur(e) {
-      console.log('focus');
-      console.log('onBlur');
         if(this.tooltipEvent === 'focus') {
             this.hide();
         }
@@ -155,7 +149,6 @@ export class Tooltip implements OnDestroy {
 
         this.container.appendChild(tooltipText);
 
-        console.log('this.appenChild: ' + this.appendTo);
 
         if(this.appendTo === 'body')
             document.body.appendChild(this.container);
@@ -167,10 +160,8 @@ export class Tooltip implements OnDestroy {
 
     ngOnDestroy() {
 
-      console.log('ngOnDestroy');
 
         if(this.container && this.container.parentElement) {
-          console.log('has Container');
             if(this.appendTo === 'body')
                 document.body.removeChild(this.container);
             else if(this.appendTo === 'target')
@@ -178,7 +169,6 @@ export class Tooltip implements OnDestroy {
             else
                 this.domHandler.removeChild(this.container, this.appendTo);
         }
-        console.log('remove container: ');
         this.container = null;
     }
 }
