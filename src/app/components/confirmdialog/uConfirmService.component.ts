@@ -16,6 +16,21 @@ import {UButtonModule} from '../button/uButton';
 import {Platform} from "../platform/platform";
 
 @Component({
+  selector: 'dContent',
+  template:
+  `<ng-content></ng-content>
+  `
+})
+export class DialogCotent implements AfterViewInit,OnDestroy {
+  ngAfterViewInit(): void {
+  }
+
+  ngOnDestroy(): void {
+  }
+
+}
+
+@Component({
   selector: 'u-p-confirmDialog',
   template:
   `
@@ -31,6 +46,9 @@ import {Platform} from "../platform/platform";
       <div class="confirmContent">
         <div class="faMessage" *ngIf="header">{{message}}</div>
         <!--ui-widget-content -->
+        <div *ngIf="dContent">
+          <ng-content select="dContent" ></ng-content>
+        </div>
         <div class="ui-dialog-buttonpane ui-helper-clearfix" *ngIf="footer">
           <ng-content select="p-footer"></ng-content>
         </div>
@@ -94,6 +112,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
   @Input() key: string;
 
   @ContentChild(Footer) footer;
+  @ContentChild(DialogCotent) dContent;
 
   // @ViewChild('content') contentViewChild: ElementRef;
 
@@ -297,7 +316,7 @@ export class ConfirmDialog implements AfterViewInit,OnDestroy {
 
 @NgModule({
   imports: [CommonModule, ButtonModule, UButtonModule],
-  exports: [ConfirmDialog, ButtonModule, SharedModule],
-  declarations: [ConfirmDialog]
+  exports: [ConfirmDialog, ButtonModule, SharedModule, DialogCotent ],
+  declarations: [ConfirmDialog, DialogCotent ]
 })
 export class UConfirmDialogModule { }

@@ -163,6 +163,7 @@ export class DomHandler {
   }
 
   public scrollInView(container, item) {
+    console.log('')
     let borderTopValue: string = getComputedStyle(container).getPropertyValue('borderTopWidth');
     let borderTop: number = borderTopValue ? parseFloat(borderTopValue) : 0;
     let paddingTopValue: string = getComputedStyle(container).getPropertyValue('paddingTop');
@@ -405,6 +406,8 @@ export class DomHandler {
   }
 
    public scrollSmoothInView(container, item, duration: number) {
+    console.log('scrollSmoothInView: ')
+     console.log(container);
 
     let borderTopValue: string = getComputedStyle(container).getPropertyValue('borderTopWidth');
     let borderTop: number = borderTopValue ? parseFloat(borderTopValue) : 0;
