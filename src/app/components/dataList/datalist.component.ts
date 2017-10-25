@@ -4,14 +4,15 @@ import {CommonModule} from '@angular/common';
 import {BlockableUI} from '../../components/common/api';
 import {Header, Footer, PrimeTemplate, SharedModule} from '../../components/common/shared';
 import {UPaginatorModule} from '../../components/paginator/paginator';
+import {ObjectUtils} from "../utils/objectutils";
+import {DomHandler} from "../dom/domhandler";
 
 // import {SharedModule,Header,Footer,PrimeTemplate} from '../common/shared';
 // import {BlockableUI} from '../common/api';
 
-
-
 @Component({
     selector: 'u-dataList',
+    providers: [DomHandler,ObjectUtils],
     template: `
         <div [ngClass]="'ui-datalist ui-widget ui-margin-top-little'" [ngStyle]="style" [class]="styleClass">
           
@@ -25,7 +26,7 @@ import {UPaginatorModule} from '../../components/paginator/paginator';
                   <div class="emptyIcon"></div>
                   {{emptyMessage}}</div>
                 <ul class="ui-datalist-data">
-                    <li *ngFor="let item of dataToRender;let i = index;trackBy: trackBy">
+                    <li *ngFor="let item of dataToRender;let i = index;trackBy: trackBy" (click) = "handleRowClick($event, item)" [class]="getRowStyle(i)">
                         <ng-template [pTemplateWrapper]="itemTemplate" [item]="item" [index]="i"></ng-template>
                     </li>
                 </ul>
@@ -54,7 +55,12 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
 
     @Input() lazy: boolean;
 
+    @Input() selectedStyleClass: string = 'ui-datalist-selected';
+
     @Output() onLazyLoad: EventEmitter<any> = new EventEmitter();
+
+    @Output() onRowClick: EventEmitter<any> = new EventEmitter();
+  //
 
     @Input() style: any;
 
@@ -67,6 +73,9 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
     @Input() trackBy: Function = (index: number, item: any) => item;
 
     @Output() onPage: EventEmitter<any> = new EventEmitter();
+
+    @Output() onSelectRow: EventEmitter<any> = new EventEmitter();
+    //selectionChange
 
     @ContentChild(Header) header;
 
@@ -84,7 +93,29 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
 
     public page: number = 0;
 
-    constructor(public el: ElementRef) {}
+    public _selection : any;
+    public _selectionIndex: number;
+
+
+
+    @Input()
+    dataKey: string;
+
+
+  @Input() compareSelectionBy: string = 'deepEquals';
+
+/*
+  this._selection = rowData;
+  this.selectionChange.emit(rowData);
+  if(dataKeyValue) {
+    this.selectionKeys = {};
+    this.selectionKeys[dataKeyValue] = 1;
+  }
+*/
+
+    constructor(public el: ElementRef,
+                public objectUtils: ObjectUtils,
+    ) {}
 
     ngAfterContentInit() {
         this.templates.forEach((item) => {
@@ -99,6 +130,55 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
             }
         });
     }
+
+    getRowStyle(rowIndex: number) {
+      if (this._selectionIndex === rowIndex) {
+        return  this.selectedStyleClass;
+      }else  {
+        return '';
+      }
+    }
+
+  handleRowClick(event, data: any) {
+    let selectionIndex = this.findIndexInSelection(data);
+
+    let targetNode = (<HTMLElement> event.target).nodeName;
+
+    if (targetNode == 'INPUT' || targetNode == 'BUTTON' || targetNode == 'A' || targetNode == 'LABEL') {
+      return;
+    } else {
+      this.onRowClick.emit({event, data});
+      this._selection = data;
+      if (selectionIndex === this._selection) {
+        this._selectionIndex = null;
+      } else {
+        this._selectionIndex = selectionIndex;
+        this.onSelectRow.emit({event, data});
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+
+  equals(data1, data2) {
+    return this.compareSelectionBy === 'equals' ? (data1 === data2) : this.objectUtils.equals(data1, data2, this.dataKey);
+  }
+
+  findIndexInSelection(rowData: any) {
+    let index: number = -1;
+    if(this.value) {
+      for(let i = 0; i  < this.value.length; i++) {
+        if(this.equals(rowData, this.value[i])) {
+          index = i;
+          break;
+        }
+      }
+    }
+
+    return index;
+  }
+
 
     ngAfterViewInit() {
         if(this.lazy) {

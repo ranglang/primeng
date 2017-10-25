@@ -766,7 +766,8 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     initialized: boolean;
 
     constructor(public el: ElementRef, public domHandler: DomHandler, public differs: IterableDiffers,
-            public renderer: Renderer2, public changeDetector: ChangeDetectorRef, public objectUtils: ObjectUtils,
+            public renderer: Renderer2, public changeDetector: ChangeDetectorRef,
+                public objectUtils: ObjectUtils,
             public zone: NgZone) {
     	this.differ = differs.find([]).create(null);
     }

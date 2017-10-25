@@ -34,3 +34,9 @@
     padding: .5em .75em;
     color: rgb(150,150,150);
 }
+
+
+ul.ui-datalist-data > li.ui-datalist-selected > div {
+  background-color: rgba(11,235, 106, 0.06);
+
+}
