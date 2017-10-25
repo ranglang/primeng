@@ -150,7 +150,7 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
       this.onRowClick.emit({event, data});
       this._selection = data;
       if (selectionIndex === this._selection) {
-        this._selectionIndex = null;
+        this._selectionIndex = undefined;
       } else {
         this._selectionIndex = selectionIndex;
         this.onSelectRow.emit({event, data});
