@@ -144,7 +144,9 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
 
     let targetNode = (<HTMLElement> event.target).nodeName;
 
-    if (targetNode == 'INPUT' || targetNode == 'BUTTON' || targetNode == 'A' || targetNode == 'LABEL') {
+    if (targetNode == 'INPUT' || targetNode == 'BUTTON' || targetNode == 'A' || targetNode == 'LABEL'
+      || targetNode == 'LI'
+    ) {
       return;
     } else {
       this.onRowClick.emit({event, data});
@@ -155,7 +157,6 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
         this._selectionIndex = selectionIndex;
         this.onSelectRow.emit({event, data});
       }
-
       event.preventDefault();
       event.stopPropagation();
     }
