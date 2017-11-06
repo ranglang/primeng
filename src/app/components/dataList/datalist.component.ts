@@ -53,6 +53,9 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
 
     @Input() rowsPerPageOptions: number[];
 
+  _selectedIndex: number;
+
+
     @Input() lazy: boolean;
 
     @Input() selectedStyleClass: string = 'ui-datalist-selected';
@@ -94,7 +97,6 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
     public page: number = 0;
 
     public _selection : any;
-    public _selectionIndex: number;
 
 
 
@@ -132,7 +134,7 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
     }
 
     getRowStyle(rowIndex: number) {
-      if (this._selectionIndex === rowIndex) {
+      if (this._selectedIndex === rowIndex) {
         return  this.selectedStyleClass;
       }else  {
         return '';
@@ -141,9 +143,7 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
 
   handleRowClick(event, data: any) {
     let selectionIndex = this.findIndexInSelection(data);
-
     let targetNode = (<HTMLElement> event.target).nodeName;
-
     if (targetNode == 'INPUT' || targetNode == 'BUTTON' || targetNode == 'A' || targetNode == 'LABEL'
       || targetNode == 'LI'
     ) {
@@ -152,10 +152,10 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
       this.onRowClick.emit({event, data});
       this._selection = data;
       if (selectionIndex === this._selection) {
-        this._selectionIndex = undefined;
+        this._selectedIndex  = undefined;
       } else {
-        this._selectionIndex = selectionIndex;
-        this.onSelectRow.emit({event, data});
+        this._selectedIndex   = selectionIndex;
+        this.onSelectRow.emit({event, data, selectionIndex});
       }
       event.preventDefault();
       event.stopPropagation();
@@ -176,7 +176,6 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
         }
       }
     }
-
     return index;
   }
 
@@ -190,9 +189,18 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
         }
     }
 
+  @Input() get selectedIndex(): number {
+    return this._selectedIndex;
+  }
+
+  set selectedIndex(val: number) {
+      this._selectedIndex = val;
+  }
+
     @Input() get value(): any[] {
         return this._value;
     }
+
 
     set value(val:any[]) {
         this._value = val;
