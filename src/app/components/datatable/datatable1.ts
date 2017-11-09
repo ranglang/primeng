@@ -278,7 +278,7 @@ export class TableBody {
         </div>
     `
 })
-export class ScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy {
+export class ScrollableView implements AfterViewInit, AfterViewChecked, OnDestroy {
 
     constructor(@Inject(forwardRef(() => DataTable)) public dt:DataTable, public domHandler: DomHandler, public el: ElementRef, public renderer: Renderer2, public zone: NgZone) {}
 
@@ -383,38 +383,44 @@ export class ScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy 
         }
     }
 
+    onBodyScrollDetail(frozenScrollBody : any) {
+      this.scrollHeaderBox.style.marginLeft = -1 * this.scrollBody.scrollLeft + 'px';
+      if(this.scrollFooterBox) {
+        this.scrollFooterBox.style.marginLeft = -1 * this.scrollBody.scrollLeft + 'px';
+      }
+
+      if(frozenScrollBody) {
+        frozenScrollBody.scrollTop = this.scrollBody.scrollTop;
+      }
+
+      if(this.virtualScroll) {
+        let viewport = this.domHandler.getOuterHeight(this.scrollBody);
+        let tableHeight = this.domHandler.getOuterHeight(this.scrollTable);
+        let pageHeight = this.rowHeight * this.dt.rows;
+        let virtualTableHeight = this.domHandler.getOuterHeight(this.scrollTableWrapper);
+        let pageCount = (virtualTableHeight / pageHeight)||1;
+
+        if(this.scrollBody.scrollTop + viewport > parseFloat(this.scrollTable.style.top) + tableHeight || this.scrollBody.scrollTop < parseFloat(this.scrollTable.style.top)) {
+          let page = Math.floor((this.scrollBody.scrollTop * pageCount) / (this.scrollBody.scrollHeight)) + 1;
+          this.onVirtualScroll.emit({
+            page: page,
+            callback: () => {
+              this.scrollTable.style.top = ((page - 1) * pageHeight) + 'px';
+            }
+          });
+        }
+      }
+    }
+
+
     onBodyScroll(event) {
         let frozenView = this.el.nativeElement.previousElementSibling;
         if(frozenView) {
             var frozenScrollBody = this.domHandler.findSingle(frozenView, '.ui-datatable-scrollable-body');
+            var frozenScrollBody2 = this.domHandler.findSingle(this.el.nativeElement.nextElementSibling, '.ui-datatable-scrollable-body');
         }
-
-        this.scrollHeaderBox.style.marginLeft = -1 * this.scrollBody.scrollLeft + 'px';
-        if(this.scrollFooterBox) {
-            this.scrollFooterBox.style.marginLeft = -1 * this.scrollBody.scrollLeft + 'px';
-        }
-
-        if(frozenScrollBody) {
-            frozenScrollBody.scrollTop = this.scrollBody.scrollTop;
-        }
-
-        if(this.virtualScroll) {
-            let viewport = this.domHandler.getOuterHeight(this.scrollBody);
-            let tableHeight = this.domHandler.getOuterHeight(this.scrollTable);
-            let pageHeight = this.rowHeight * this.dt.rows;
-            let virtualTableHeight = this.domHandler.getOuterHeight(this.scrollTableWrapper);
-            let pageCount = (virtualTableHeight / pageHeight)||1;
-
-            if(this.scrollBody.scrollTop + viewport > parseFloat(this.scrollTable.style.top) + tableHeight || this.scrollBody.scrollTop < parseFloat(this.scrollTable.style.top)) {
-                let page = Math.floor((this.scrollBody.scrollTop * pageCount) / (this.scrollBody.scrollHeight)) + 1;
-                this.onVirtualScroll.emit({
-                    page: page,
-                    callback: () => {
-                        this.scrollTable.style.top = ((page - 1) * pageHeight) + 'px';
-                    }
-                });
-            }
-        }
+      this.onBodyScrollDetail(frozenScrollBody)
+      this.onBodyScrollDetail(frozenScrollBody2)
     }
 
     setScrollHeight() {
@@ -502,9 +508,10 @@ export class ScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy 
                         class="ui-datatable-scrollable-view" [virtualScroll]="virtualScroll" (onVirtualScroll)="onVirtualScroll($event)"
                         [ngClass]="{'ui-datatable-unfrozen-view': hasFrozenColumns()}"></div>
                   
-                  <div *ngIf="hasAfterFrozenColumns()" [pScrollableView]="afterFrozenColumns" frozen="true"
+                  <div *ngIf="hasAfterFrozenColumns()" 
+                       [pScrollableView]="afterFrozenColumns" frozen="true"
                        [headerColumnGroup]="afterFrozenHeaderColumnGroup" [footerColumnGroup]="afterFrozenFooterColumnGroup"
-                       [ngStyle]="{'width':this.afterFrozenWidth}" class="ui-datatable-scrollable-view ui-datatable-frozen-view"></div>
+                       [ngStyle]="{'width':this.afterFrozenWidth,'top': 0, 'position': 'absolute', 'left': getLeftOfFloatWidth }" class="ui-datatable-scrollable-view ui-datatable-frozen-view"></div>
                   
                 </div>
             </ng-template>
@@ -2621,13 +2628,21 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
         return this.columns ? this.columns.filter(c => !c.hidden): [];
     }
 
+
+    get getLeftOfFloatWidth () {
+      return parseFloat(this.frozenWidth) + parseFloat(this.unfrozenWidth) +  'px';
+    }
+
     get containerWidth() {
-        if(this.scrollable) {
-            if(this.scrollWidth) {
+      // let frozenWidth = this.frozenWidth;
+      // let unfrozenWidth = this.unfrozenWidth;
+        if (this.scrollable) {
+            if (this.scrollWidth) {
                 return this.scrollWidth;
-            }
-            else if(this.frozenWidth && this.unfrozenWidth) {
-                return parseFloat(this.frozenWidth) + parseFloat(this.unfrozenWidth) + 'px';
+            } else if (this.frozenWidth && this.unfrozenWidth && this.afterFrozenWidth) {
+              return parseFloat(this.frozenWidth) + parseFloat(this.unfrozenWidth) + parseFloat(this.afterFrozenWidth) +  'px';
+            } else if( this.frozenWidth && this.unfrozenWidth) {
+              return parseFloat(this.frozenWidth) + parseFloat(this.unfrozenWidth) +  'px';
             }
         }
         else {
@@ -2636,7 +2651,6 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     }
 
   hasAfterFrozenColumns() {
-    console.log('has ; l' + this.afterFrozenColumns && this.afterFrozenColumns.length > 0)
     return this.afterFrozenColumns && this.afterFrozenColumns.length > 0;
   }
 
