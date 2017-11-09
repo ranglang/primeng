@@ -967,11 +967,12 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     }
 
     set first(val:number) {
+      console.log('set first : ' + val)
+      console.log('previous: ' + this._first);
         let shouldPaginate = this.initialized && this._first !== val;
-
         this._first = val;
 
-        if(shouldPaginate) {
+        if (shouldPaginate) {
             this.paginate();
         }
     }
@@ -1148,6 +1149,7 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     }
 
     paginate() {
+        console.log('paginate');
         if(this.lazy)
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         else
@@ -2641,7 +2643,7 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
                 return this.scrollWidth;
             } else if (this.frozenWidth && this.unfrozenWidth && this.afterFrozenWidth) {
               return parseFloat(this.frozenWidth) + parseFloat(this.unfrozenWidth) + parseFloat(this.afterFrozenWidth) +  'px';
-            } else if( this.frozenWidth && this.unfrozenWidth) {
+            } else if ( this.frozenWidth && this.unfrozenWidth) {
               return parseFloat(this.frozenWidth) + parseFloat(this.unfrozenWidth) +  'px';
             }
         }
