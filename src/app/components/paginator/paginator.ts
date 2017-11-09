@@ -121,6 +121,9 @@ export class Paginator {
     }
 
     changePage(p :number, event) {
+      console.log('changePage: ' + p);
+      console.log(event);
+
         var pc = this.getPageCount();
 
         if(p >= 0 && p < pc) {

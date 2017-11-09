@@ -883,6 +883,7 @@ export class UDataTable implements AfterViewChecked,AfterViewInit,AfterContentIn
   }
 
   paginate(event) {
+    console.log('paginate event');
     this.first = event.first;
     this.rows = event.rows;
 
