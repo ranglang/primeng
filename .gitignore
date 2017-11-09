@@ -201,3 +201,4 @@ src/app/components/accordion/accordion.ngfactory.ts
         src/app/components/tristatecheckbox/tristatecheckbox.ngsummary.json
         src/app/components/utils/objectutils.ngsummary.json
 
+*.lock
