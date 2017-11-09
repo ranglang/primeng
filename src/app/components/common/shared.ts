@@ -94,6 +94,7 @@ export class Column implements AfterContentInit{
   @Input() filterPlaceholder: string;
   @Input() filterMaxlength: number;
   @Input() frozen: boolean;
+  @Input() isAfterFrozen: boolean;
   @Output() sortFunction: EventEmitter<any> = new EventEmitter();
   @ContentChildren(PrimeTemplate) templates: QueryList<any>;
   @ContentChild(TemplateRef) template: TemplateRef<any>;
@@ -153,6 +154,8 @@ export class HeaderColumnGroup {
 
   @Input() frozen: boolean;
 
+  @Input() isAfterFrozen: boolean;
+
   @ContentChildren(Row) rows: QueryList<any>;
 }
 
@@ -163,6 +166,8 @@ export class HeaderColumnGroup {
 export class FooterColumnGroup {
 
   @Input() frozen: boolean;
+
+  @Input() isAfterFrozen: boolean;
 
   @ContentChildren(Row) rows: QueryList<any>;
 }

@@ -496,10 +496,16 @@ export class ScrollableView implements AfterViewInit,AfterViewChecked,OnDestroy 
                     <div *ngIf="hasFrozenColumns()" [pScrollableView]="frozenColumns" frozen="true"
                         [headerColumnGroup]="frozenHeaderColumnGroup" [footerColumnGroup]="frozenFooterColumnGroup"
                         [ngStyle]="{'width':this.frozenWidth}" class="ui-datatable-scrollable-view ui-datatable-frozen-view"></div>
+                  
                     <div [pScrollableView]="scrollableColumns" [ngStyle]="{'width':this.unfrozenWidth, 'left': this.frozenWidth}"
                         [headerColumnGroup]="scrollableHeaderColumnGroup" [footerColumnGroup]="scrollableFooterColumnGroup"
                         class="ui-datatable-scrollable-view" [virtualScroll]="virtualScroll" (onVirtualScroll)="onVirtualScroll($event)"
                         [ngClass]="{'ui-datatable-unfrozen-view': hasFrozenColumns()}"></div>
+                  
+                  <div *ngIf="hasAfterFrozenColumns()" [pScrollableView]="afterFrozenColumns" frozen="true"
+                       [headerColumnGroup]="afterFrozenHeaderColumnGroup" [footerColumnGroup]="afterFrozenFooterColumnGroup"
+                       [ngStyle]="{'width':this.afterFrozenWidth}" class="ui-datatable-scrollable-view ui-datatable-frozen-view"></div>
+                  
                 </div>
             </ng-template>
             
@@ -577,6 +583,8 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     @Input() scrollWidth: any;
 
     @Input() frozenWidth: any;
+
+    @Input() afterFrozenWidth: any;
 
     @Input() unfrozenWidth: any;
 
@@ -694,6 +702,7 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
 
     @ContentChildren(HeaderColumnGroup) headerColumnGroups: QueryList<HeaderColumnGroup>;
 
+
     @ContentChildren(FooterColumnGroup) footerColumnGroups: QueryList<FooterColumnGroup>;
 
     public _value: any[];
@@ -709,14 +718,17 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     public columns: Column[];
 
     public frozenColumns: Column[];
-
+    public afterFrozenColumns: Column[];
     public scrollableColumns: Column[];
 
     public frozenHeaderColumnGroup: HeaderColumnGroup;
 
+  public afterFrozenHeaderColumnGroup: HeaderColumnGroup;
+
     public scrollableHeaderColumnGroup: HeaderColumnGroup;
 
     public frozenFooterColumnGroup: HeaderColumnGroup;
+  public afterFrozenFooterColumnGroup: HeaderColumnGroup;
 
     public scrollableFooterColumnGroup: HeaderColumnGroup;
 
@@ -1041,10 +1053,15 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
         this.scrollableColumns = [];
         this.frozenColumns = [];
 
+      this.afterFrozenColumns = [];
+
+
         for(let col of this.columns) {
             if(col.frozen)
                 this.frozenColumns.push(col);
-            else
+            else if (col.isAfterFrozen) {
+              this.afterFrozenColumns.push(col);
+            } else
                 this.scrollableColumns.push(col);
         }
     }
@@ -1053,9 +1070,13 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
         let headerColumnsGroups = this.headerColumnGroups.toArray();
         let footerColumnsGroups = this.footerColumnGroups.toArray();
 
+      // let footerColumnsGroups = this.footerColumnGroups.toArray();
+
         for(let columnGroup of headerColumnsGroups) {
             if(columnGroup.frozen)
                 this.frozenHeaderColumnGroup = columnGroup;
+            else if (columnGroup.isAfterFrozen)
+              this.afterFrozenHeaderColumnGroup = columnGroup;
             else
                 this.scrollableHeaderColumnGroup = columnGroup;
         }
@@ -1063,6 +1084,8 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
         for(let columnGroup of footerColumnsGroups) {
             if(columnGroup.frozen)
                 this.frozenFooterColumnGroup = columnGroup;
+            else if (columnGroup.isAfterFrozen)
+                this.afterFrozenFooterColumnGroup = columnGroup;
             else
                 this.scrollableFooterColumnGroup = columnGroup;
         }
@@ -2611,6 +2634,11 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
             return this.style ? this.style.width : null;
         }
     }
+
+  hasAfterFrozenColumns() {
+    console.log('has ; l' + this.afterFrozenColumns && this.afterFrozenColumns.length > 0)
+    return this.afterFrozenColumns && this.afterFrozenColumns.length > 0;
+  }
 
     hasFrozenColumns() {
         return this.frozenColumns && this.frozenColumns.length > 0;
