@@ -967,13 +967,14 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     }
 
     set first(val:number) {
-      console.log('set first : ' + val)
-      console.log('previous: ' + this._first);
         let shouldPaginate = this.initialized && this._first !== val;
         this._first = val;
 
         if (shouldPaginate) {
+            console.log('set first : ' + val  + ' .......previous: ' + this._first + 'shouldPaginate');
             this.paginate();
+        }else {
+          console.log('set first : ' + val  + ' .......previous: ' + this._first + 'not Paginate');
         }
     }
 

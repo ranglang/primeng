@@ -110,6 +110,8 @@ export class Dialog implements AfterViewInit,OnDestroy {
 
     @Input() style: any;
 
+    @Input() key: any;
+
     @Input() styleClass: string;
 
     @Input() showHeader: boolean = true;
@@ -169,11 +171,15 @@ export class Dialog implements AfterViewInit,OnDestroy {
     }
 
     set visible(val:boolean) {
+
+      console.log('key: ' + this.key +  '   visible: ' + val )
         this._visible = val;
 
         if(this.containerViewChild && this.containerViewChild.nativeElement) {
-            if(this._visible)
-                this.show();
+            if(this._visible) {
+              this.show();
+              this.moveOnTop();
+            }
             else {
                 if(this.preventVisibleChangePropagation)
                     this.preventVisibleChangePropagation = false;
@@ -288,6 +294,7 @@ export class Dialog implements AfterViewInit,OnDestroy {
     }
 
     moveOnTop() {
+        console.log('moveOnTopL ' + (DomHandler.zindex));
         this.containerViewChild.nativeElement.style.zIndex = String(++DomHandler.zindex);
     }
 

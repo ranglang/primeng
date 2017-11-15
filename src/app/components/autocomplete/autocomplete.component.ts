@@ -120,6 +120,8 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
 
     @Output() onBlur: EventEmitter<any> = new EventEmitter();
 
+    @Output() onClear: EventEmitter<any> = new EventEmitter();
+
     @Output() onDropdownClick: EventEmitter<any> = new EventEmitter();
 
     @Input() field: string;
@@ -236,12 +238,12 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
 
     ngAfterViewInit() {
         this.documentClickListener = this.renderer.listenGlobal('document', 'click', (e) => {
-            if(this.inputClick) {
+            if (this.inputClick) {
               this.inputClick = false;
             }
             else {
               let hasBaMap = false;
-              if(e.target.tagName === 'svg') {
+              if (e.target.tagName === 'svg') {
                 hasBaMap = true;
               } else if( e.target.tagName === 'path'){
                 hasBaMap = false;
@@ -317,6 +319,7 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
 
         if(value.length === 0) {
             this.hide();
+            this.onClear.emit(true);
         }
 
         if(value.length >= this.minLength) {
