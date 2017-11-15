@@ -1,7 +1,9 @@
 
-import {NgModule,Component,ViewChild,ElementRef,AfterViewInit,
-  AfterContentInit,AfterViewChecked,Input,Output,EventEmitter,
-  ContentChildren,QueryList,TemplateRef,Renderer,forwardRef,ChangeDetectorRef} from '@angular/core';
+import {
+  NgModule, Component, ViewChild, ElementRef, AfterViewInit,
+  AfterContentInit, AfterViewChecked, Input, Output, EventEmitter,
+  ContentChildren, QueryList, TemplateRef, Renderer, forwardRef, ChangeDetectorRef, Renderer2
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {DomHandler} from "../dom/domhandler";
@@ -25,7 +27,7 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
             <input *ngIf="!multiple" #in [attr.type]="type" [attr.id]="inputId" [ngStyle]="inputStyle"
                    [class]="inputStyleClass" autocomplete="off"
                    [ngClass]="'ui-inputtext ui-widget ui-state-default ui-corner-all'" (click)="onInputClick($event)"
-                   [value]="value ? (field ? objectUtils.resolveFieldData(value,field)||value : value) : null"
+                   [value]="getValue"
                    (input)="onInput($event)" (keydown)="onKeydown($event)" (focus)="onInputFocus($event)"
                    (blur)="onInputBlur($event)"
                    [attr.placeholder]="placeholder" [attr.size]="size" [attr.maxlength]="maxlength"
@@ -83,6 +85,7 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
     @Input() minLength: number = 1;
 
     @Input() delay  = 300;
+
 
     @Input() style: any;
 
@@ -184,7 +187,15 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
 
     noResults: boolean;
 
-    constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer, public objectUtils: ObjectUtils, public cd: ChangeDetectorRef) {}
+    get getValue() {
+      const a = this.value ? (this.field ? this.objectUtils.resolveFieldData(this.value, this.field) || this.value : this.value) : null
+/*      if(this.field === 'lineName')  {
+        console.log('getValue:' + a);
+      }*/
+      return a;
+    }
+
+    constructor(public el: ElementRef, public domHandler: DomHandler,public renderer2: Renderer2, public renderer: Renderer, public objectUtils: ObjectUtils, public cd: ChangeDetectorRef) {}
 
     @Input() get suggestions(): any[] {
         return this._suggestions;
@@ -237,7 +248,7 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
 
 
     ngAfterViewInit() {
-        this.documentClickListener = this.renderer.listenGlobal('document', 'click', (e) => {
+        this.documentClickListener = this.renderer.listen('document', 'click', (e) => {
             if (this.inputClick) {
               this.inputClick = false;
             }
@@ -248,23 +259,24 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
               } else if( e.target.tagName === 'path'){
                 hasBaMap = false;
               } else {
-                if(e.target.className) {
-                  if(e.target.className.indexOf('BMap') !== -1){
+                if (e.target.className) {
+                  if (e.target.className.indexOf('BMap') !== -1){
                     hasBaMap = true;
                   }
                 }
               }
 
-                if(!hasBaMap) {
-                  if(this.value) {
-                    let key = this.field ? this.objectUtils.resolveFieldData(this.value, this.field): this.value;
-                    if (key !== this.inputEL.nativeElement.value) {
-                        this.inputEL.nativeElement.value = '';
+                if (!hasBaMap) {
+                  console.log('########################################################################: ' + hasBaMap);
+                  if (this.getValue) {
+                    if (this.getValue !== this.inputEL.nativeElement.value) {
+                        this.inputEL.nativeElement.value = this.getValue;
                     }
-                  }else {
+                  } else {
+                    console.log('#################################################: ' + this.value)
                     this.inputEL.nativeElement.value = '';
                   }
-                    this.hide();
+                  this.hide();
                 }
             }
 
@@ -295,6 +307,8 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
     }
 
     writeValue(value: any) : void {
+        console.log('writeValue:' + value);
+        console.log(value);
         this.value = value;
         this.filled = this.value && this.value != '';
     }
@@ -318,14 +332,15 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
         }
 
         if(value.length === 0) {
+            this.writeValue(undefined);
             this.hide();
             this.onClear.emit(true);
         }
 
-        if(value.length >= this.minLength) {
+        if (value.length >= this.minLength) {
             //Cancel the search request if user types within the timeout
-            this.value = undefined;
-            if(this.timeout) {
+            // this.value = undefined;
+            if (this.timeout) {
                 clearTimeout(this.timeout);
             }
 

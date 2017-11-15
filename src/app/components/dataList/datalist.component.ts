@@ -157,8 +157,6 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
         this._selectedIndex   = selectionIndex;
         this.onSelectRow.emit({event, data, selectionIndex});
       }
-      event.preventDefault();
-      event.stopPropagation();
     }
   }
 
