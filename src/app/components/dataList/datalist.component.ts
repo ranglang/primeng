@@ -14,20 +14,19 @@ import {DomHandler} from "../dom/domhandler";
     selector: 'u-dataList',
     providers: [DomHandler,ObjectUtils],
     template: `
-        <div [ngClass]="'ui-datalist ui-widget ui-margin-top-little'" [ngStyle]="style" [class]="styleClass">
-          
+        <div [ngClass]="{'ui-datalist ui-widget ui-margin-top-little': true, 'ui-datalist-scrollable': scrollable}"   [ngStyle]="style" [class]="styleClass">
             <div class="ui-datalist-header ui-widget-header ui-corner-top" *ngIf="header && !(hideHeaderIfEmpty && isEmpty())">
                 <ng-content select="p-header"></ng-content>
             </div>
             <u-paginator [rows]="rows" [first]="first" [totalRecords]="totalRecords" [pageLinkSize]="pageLinks" 
             (onPageChange)="paginate($event)" styleClass="ui-paginator-bottom" [rowsPerPageOptions]="rowsPerPageOptions" *ngIf="paginator  && paginatorPosition!='bottom' || paginatorPosition =='both'"></u-paginator>
-            <div class="ui-datalist-content ui-widget-content">
+            <div class="ui-datalist-content ui-widget-content " [ngStyle]="{'max-height': scrollHeight}">
                 <div *ngIf="isEmpty()" class="ui-datalist-emptymessage">
                   <div class="emptyIcon"></div>
                   {{emptyMessage}}</div>
                 <ul class="ui-datalist-data">
                     <li *ngFor="let item of dataToRender;let i = index;trackBy: trackBy" (click) = "handleRowClick($event, item)" [class]="getRowStyle(i)">
-                        <ng-template [pTemplateWrapper]="itemTemplate" [item]="item" [index]="i"></ng-template>
+                        <ng-template [pTemplateWrapper]="itemTemplate" [item]="item" [index]="i + first"></ng-template>
                     </li>
                 </ul>
             </div>
@@ -40,6 +39,11 @@ import {DomHandler} from "../dom/domhandler";
     `
 })
 export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
+
+
+  @Input() scrollable: boolean;
+
+  @Input() scrollHeight: string;
 
     @Input() paginator: boolean;
 

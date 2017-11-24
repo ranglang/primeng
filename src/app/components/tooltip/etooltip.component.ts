@@ -14,7 +14,6 @@ import { DomHandler } from '../dom/domhandler';
 export class Tooltip implements OnDestroy, AfterViewInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     // throw new Error("Method not implemented.");
-    // console.log(thi)
     this.show();
   }
 

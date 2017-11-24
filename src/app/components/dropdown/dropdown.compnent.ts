@@ -262,6 +262,8 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
     }
 
     get label(): string {
+      console.log('this.selectedOption');
+      console.log(this.selectedOption);
         return (this.selectedOption ? this.selectedOption.label : this.placeholder);
     }
 
@@ -523,8 +525,12 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
     }
 
     findOption(val: any, opts: SelectItem[]): SelectItem {
-        let index: number = this.findOptionIndex(val, opts);
-        return (index != -1) ? opts[index] : null;
+        if (val === '') return null;
+        else  {
+          let index: number = this.findOptionIndex(val, opts);
+          return (index != -1) ? opts[index] : null;
+        }
+
     }
 
     onFilter(event): void {
@@ -552,7 +558,6 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
     bindDocumentClickListener() {
         if (!this.documentClickListener) {
             this.documentClickListener = this.renderer.listenGlobal('document', 'click', () => {
-                console.log('listen Global');
                 if (!this.selfClick && !this.itemClick) {
                     this.panelVisible = false;
                     this.unbindDocumentClickListener();

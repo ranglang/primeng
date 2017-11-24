@@ -190,7 +190,6 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
     get getValue() {
       const a = this.value ? (this.field ? this.objectUtils.resolveFieldData(this.value, this.field) || this.value : this.value) : null
 /*      if(this.field === 'lineName')  {
-        console.log('getValue:' + a);
       }*/
       return a;
     }
@@ -267,13 +266,11 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
               }
 
                 if (!hasBaMap) {
-                  console.log('########################################################################: ' + hasBaMap);
                   if (this.getValue) {
                     if (this.getValue !== this.inputEL.nativeElement.value) {
                         this.inputEL.nativeElement.value = this.getValue;
                     }
                   } else {
-                    console.log('#################################################: ' + this.value)
                     this.inputEL.nativeElement.value = '';
                   }
                   this.hide();
@@ -307,8 +304,6 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
     }
 
     writeValue(value: any) : void {
-        console.log('writeValue:' + value);
-        console.log(value);
         this.value = value;
         this.filled = this.value && this.value != '';
     }
@@ -575,7 +570,7 @@ export class AutoComplete implements AfterViewInit, AfterViewChecked, ControlVal
     }
 
     updateFilledState() {
-        if(this.multiple)
+        if (this.multiple)
             this.filled = (this.value && this.value.length) || (this.multiInputEL && this.multiInputEL.nativeElement && this.multiInputEL.nativeElement.value != '');
         else
             this.filled = this.inputEL && this.inputEL.nativeElement && this.inputEL.nativeElement.value != '';

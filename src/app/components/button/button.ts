@@ -112,7 +112,6 @@ export class Button implements AfterViewInit, OnDestroy {
     // this.el.nativeElement.appendChild(iconElement);
 
     // while(this.el.nativeElement.hasChildNodes()) {
-    //     console.log('hasChildNodes');
     //     this.el.nativeElement.removeChild(this.el.nativeElement.lastChild);
     // }
 

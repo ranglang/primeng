@@ -936,7 +936,6 @@ export class Calendar implements AfterViewInit,AfterViewChecked,OnInit,OnDestroy
   }
 
   parseValueFromString(text: string): Date {
-    console.log('parseValueFromString: ' + text);
     if(!text || text.trim().length === 0) {
       return null;
     }
@@ -945,21 +944,15 @@ export class Calendar implements AfterViewInit,AfterViewChecked,OnInit,OnDestroy
     // let parts: string[] = text.split(' ');
     let a = text.slice(0, 2);
     let b = text.slice(2);
-    console.log('a.......: ' + a);
-    console.log('b..............: ' + b);
 
     if(this.timeOnly) {
 
       dateValue = new Date();
-      console.log('dateValue: ' + dateValue);
 
       dateValue.setHours(Number(a));
-      console.log('setHour:' + dateValue);
       dateValue.setMinutes(Number(b));
-      console.log(dateValue);
       // this.populateTime(dateValue, a, b);
     }
-    console.log('dateValue');
     // else {
     //   if(this.showTime) {
     //     dateValue = this.parseDate(parts[0], this.dateFormat);
@@ -974,7 +967,6 @@ export class Calendar implements AfterViewInit,AfterViewChecked,OnInit,OnDestroy
   }
 
   populateTime(value, timeString, ampm) {
-    console.log('populateTime');
     if(this.hourFormat == '12' && !ampm) {
       throw 'Invalid Time';
     }

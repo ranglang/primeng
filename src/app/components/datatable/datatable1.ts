@@ -514,7 +514,7 @@ export class ScrollableView implements AfterViewInit, AfterViewChecked, OnDestro
                   <div *ngIf="hasAfterFrozenColumns()" 
                        [pScrollableView]="afterFrozenColumns" frozen="true"
                        [headerColumnGroup]="afterFrozenHeaderColumnGroup" [footerColumnGroup]="afterFrozenFooterColumnGroup"
-                       [ngStyle]="{'width':this.afterFrozenWidth,'top': 0, 'position': 'absolute', 'left': getLeftOfFloatWidth }" class="ui-datatable-scrollable-view ui-datatable-frozen-view"></div>
+                       [ngStyle]="{'width':this.afterFrozenWidth,'top': 0, 'position': 'absolute', 'left': getLeftOfFloatWidth }" class="ui-datatable-scrollable-view ui-datatable-frozen-view ui-datatable-after-frozen-view"></div>
                   
                 </div>
             </ng-template>
@@ -623,7 +623,7 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
 
     @Input() exportFilename: string = 'download';
 
-    @Input() emptyMessage: string = 'No records found';
+    @Input() emptyMessage: string = '查询结果为空';
 
     @Input() paginatorPosition: string = 'bottom';
 
@@ -977,10 +977,8 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
         this._first = val;
 
         if (shouldPaginate) {
-            console.log('set first : ' + val  + ' .......previous: ' + this._first + 'shouldPaginate');
             this.paginate();
         }else {
-          console.log('set first : ' + val  + ' .......previous: ' + this._first + 'not Paginate');
         }
     }
 
@@ -1156,7 +1154,6 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     }
 
     paginate() {
-        console.log('paginate');
         if(this.lazy)
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         else

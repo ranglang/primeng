@@ -50,7 +50,7 @@ import {Header, SharedModule, Footer} from '../../components/common/shared';
           <span class="fa fa-fw fa-close"></span>
         </a>
       </div>
-      <div #content class="ui-dialog-content ui-widget-content" [ngStyle]="contentStyle">
+      <div #content [ngStyle]="contentStyle">
         <ng-content></ng-content>
       </div>
       <ng-content select="p-footer"></ng-content>
@@ -172,7 +172,6 @@ export class Dialog implements AfterViewInit,OnDestroy {
 
     set visible(val:boolean) {
 
-      console.log('key: ' + this.key +  '   visible: ' + val )
         this._visible = val;
 
         if(this.containerViewChild && this.containerViewChild.nativeElement) {
@@ -270,7 +269,7 @@ export class Dialog implements AfterViewInit,OnDestroy {
             this.mask.style.zIndex = String(parseInt(this.containerViewChild.nativeElement.style.zIndex) - 1);
             this.domHandler.addMultipleClasses(this.mask, 'ui-widget-overlay ui-dialog-mask');
 
-            if(this.closable && this.dismissableMask) {
+            if (this.closable && this.dismissableMask) {
                 this.maskClickListener = this.renderer.listen(this.mask, 'click', (event: any) => {
                     this.close(event);
                 });
@@ -294,7 +293,6 @@ export class Dialog implements AfterViewInit,OnDestroy {
     }
 
     moveOnTop() {
-        console.log('moveOnTopL ' + (DomHandler.zindex));
         this.containerViewChild.nativeElement.style.zIndex = String(++DomHandler.zindex);
     }
 
@@ -690,7 +688,6 @@ export class UDialogModule { }
 //     }
 //
 //     center() {
-//         console.log('console.log center');
 //         let elementWidth = this.domHandler.getOuterWidth(this.container);
 //         let elementHeight = this.domHandler.getOuterHeight(this.container);
 //         if(elementWidth == 0 && elementHeight == 0) {
@@ -701,8 +698,6 @@ export class UDialogModule { }
 //             this.container.style.display = 'none';
 //             this.container.style.visibility = 'visible';
 //         }
-//         console.log('getViewPort width' + elementWidth);
-//         console.log('getViewPort height' + elementHeight)
 //         let viewport = this.domHandler.getViewport();
 //         let x = Math.max((viewport.width - elementWidth) / 2, 0);
 //         let y = Math.max((viewport.height - elementHeight) / 2, 0);
@@ -783,7 +778,6 @@ export class UDialogModule { }
 //     }
 //
 //     onResize(event) {
-//         console.log('onResize');
 //         if(this.resizing) {
 //             let deltaX = event.pageX - this.lastPageX;
 //             let deltaY = event.pageY - this.lastPageY;

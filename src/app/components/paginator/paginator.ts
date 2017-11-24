@@ -121,7 +121,6 @@ export class UPaginator {
   }
 
   changePage(p :number) {
-    console.log('changePage: ' + p)
     var pc = this.getPageCount();
 
     if(p >= 0 && p < pc) {
@@ -143,7 +142,6 @@ export class UPaginator {
   }
 
   changePageToFirst(event) {
-    console.log('changePageToFirst');
     if(!this.isFirstPage()){
       this.changePage(0);
     }
@@ -152,19 +150,16 @@ export class UPaginator {
   }
 
   changePageToPrev(event) {
-    console.log('changePageToPrev')
     this.changePage(this.getPage() - 1);
     event.preventDefault();
   }
 
   changePageToNext(event) {
-    console.log('changePageToNext');
     this.changePage(this.getPage()  + 1);
     event.preventDefault();
   }
 
   changePageToLast(event) {
-    console.log('changePageToLast');
     if(!this.isLastPage()){
       this.changePage(this.getPageCount() - 1);
     }
@@ -173,13 +168,11 @@ export class UPaginator {
   }
 
   onPageLinkClick(event, page) {
-    console.log('onPageLinkClick');
     this.changePage(page);
     event.preventDefault();
   }
 
   onRppChange(event) {
-    console.log('onRppChange')
     this.rows = this.rowsPerPageOptions[event.target.selectedIndex];
 
     this.changePage(this.getPage());
