@@ -262,8 +262,8 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
     }
 
     get label(): string {
-      console.log('this.selectedOption');
-      console.log(this.selectedOption);
+      // console.log('this.selectedOption');
+      // console.log(this.selectedOption);
         return (this.selectedOption ? this.selectedOption.label : this.placeholder);
     }
 
