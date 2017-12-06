@@ -110,15 +110,6 @@ export class DataList implements AfterViewInit,AfterContentInit,BlockableUI {
 
   @Input() compareSelectionBy: string = 'deepEquals';
 
-/*
-  this._selection = rowData;
-  this.selectionChange.emit(rowData);
-  if(dataKeyValue) {
-    this.selectionKeys = {};
-    this.selectionKeys[dataKeyValue] = 1;
-  }
-*/
-
     constructor(public el: ElementRef,
                 public objectUtils: ObjectUtils,
     ) {}

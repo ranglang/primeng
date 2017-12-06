@@ -107,6 +107,8 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
 
     @Input() tabindex: number;
 
+    @Input() showPlaceHolder: boolean = false;
+
     @Input() placeholder: string;
 
     @Input() filterPlaceholder: string;
@@ -262,9 +264,11 @@ export class Dropdown implements OnInit,AfterViewInit,AfterContentInit,AfterView
     }
 
     get label(): string {
-      // console.log('this.selectedOption');
-      // console.log(this.selectedOption);
+      if (this.showPlaceHolder) {
+        return this.placeholder;
+      } else {
         return (this.selectedOption ? this.selectedOption.label : this.placeholder);
+      }
     }
 
     get editableLabel(): string {

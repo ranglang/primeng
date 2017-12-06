@@ -28,12 +28,20 @@ import {CommonModule} from '@angular/common';
         <span class="fa fa-step-forward"></span>
       </a>
       <select class="ui-paginator-rpp-options ui-widget ui-state-default" *ngIf="rowsPerPageOptions" (change)="onRppChange($event)">
-        <option *ngFor="let opt of rowsPerPageOptions" [value]="opt" [selected]="rows == opt">{{opt}}</option>
+        <option *ngFor="let opt of rowsPerPageOptions" [value]="opt" [selected]="rows == opt">{{getLabel(opt)}}</option>
       </select>
     </div>
   `
 })
 export class UPaginator {
+
+  getLabel(opts: number) {
+    if (opts === 10000) {
+      return '全部'
+    }else {
+      return opts;
+    }
+  }
 
   @Input() pageLinkSize: number = 5;
 

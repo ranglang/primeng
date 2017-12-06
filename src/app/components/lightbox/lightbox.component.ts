@@ -1,41 +1,84 @@
 import {
   NgModule, Component, ElementRef, Input, Output, Renderer, AfterViewInit, OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef, EventEmitter
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
+import {UTooltipModule} from "../tooltip/tooltip.component";
 
 @Component({
   selector: 'u-lightbox',
   template: `
-        <div [ngStyle]="style" [class]="styleClass" *ngIf="(type == 'image')">
-            <a *ngFor="let image of images; let i = index;" [href]="image.source" (click)="onImageClick($event,image,i,content)">
-                <img [src]="image.thumbnail" [title]="image.title" [alt]="image.alt">
+    <div [ngStyle]="style" [class]="styleClass" *ngIf="(type == 'image')">
+      <div *ngFor="let image of images; let i = index;" class="item-wrapper">
+        <div *ngIf="image.source; else showMock">
+          <div class="editImgRectangle" *ngIf="edit; else showImage">
+            <div class="lightbox-triangle-topright">
+              <!--<a [href]="image.source">-->
+              <!--</a>-->
+            </div>
+            
+            <img class="btn-delete-img" (click) ="click2Delete(image,$event)"
+                 src="assets/img/icon-delete2.svg">
+            
+            <img  [ngStyle]="{width: width + 'px', height: height+'px'}"
+              [src]="image.thumbnail" [title]="image.title" [alt]="image.alt">
+          </div>
+          
+          <ng-template #showImage>
+            <a [href]="image.source" (click)="onImageClick($event,image,i,content)">
+              <img [ngStyle]="{width: width + 'px', height: height+'px'}"
+                [src]="image.thumbnail" [title]="image.title" [alt]="image.alt">
             </a>
+          </ng-template>
+
         </div>
-        <span [ngStyle]="style" [class]="styleClass" *ngIf="(type == 'content')" (click)="onLinkClick($event,content)">
+
+        <ng-template #showMock>
+          <div class="mockImage cursor-p" (click)="click2upload($event)" 
+               *ngIf="edit; else showEmpty">
+            <img src="assets/img/addCarImage.svg"/>
+            <span class="info-text-form">上传新图片</span>
+          </div>
+          
+          <ng-template #showEmpty>
+            <div class="mockImage">
+              <img src="assets/img/mock-image.svg"/>
+              <span class="info-text-form" 
+                    uTooltip="没有图片">没有图片</span>
+            </div>
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+    
+    <span [ngStyle]="style" [class]="styleClass" *ngIf="(type == 'content')" (click)="onLinkClick($event,content)">
             <ng-content select="a"></ng-content>
         </span>
-        <div class="ui-lightbox ui-widget ui-helper-hidden ui-corner-all ui-shadow" [style.display]="visible ? 'block' : 'none'" [style.zIndex]="zindex"
-            [style.transitionProperty]="'all'" [style.transitionDuration]="effectDuration" [style.transitionTimingFunction]="easing" (click)="preventDocumentClickListener=true">
-           <div class="ui-lightbox-content-wrapper">
-           <!--ui-state-default ui-corner-right-->
-              <a class=" ui-lightbox-nav-left " [style.zIndex]="zindex + 1" (click)="prev(img)"
-                [ngClass]="{'ui-helper-hidden':!leftVisible}"><span class="fa fa-fw fa-caret-left"></span></a>
-              <div #content class="ui-lightbox-content ui-corner-all" #content [ngClass]="{'ui-lightbox-loading': loading}" 
-                [style.transitionProperty]="'width,height'" [style.transitionDuration]="effectDuration" [style.transitionTimingFunction]="easing">
-                <img #img [src]="currentImage ? currentImage.source||'' : ''" (load)="onImageLoad($event,content)" style="display:none">
-                <ng-content></ng-content>
-              </div>
-              <!--ui-state-default ui-corner-left -->
-              <a class=" ui-lightbox-nav-right ui-helper-hidden" [style.zIndex]="zindex + 1" (click)="next(img)"
-                [ngClass]="{'ui-helper-hidden':!rightVisible}"><span class="fa fa-fw fa-caret-right"></span></a>
-           </div>
-           <!--<div class="ui-lightbox-caption ui-widget-header" [style.display]="captionText ? 'block' : 'none'">-->
-              <!--<span class="ui-lightbox-caption-text">{{captionText}}</span><a class="ui-lightbox-close ui-corner-all" href="#" (click)="hide($event)"><span class="fa fa-fw fa-close"></span></a>-->
-              <!--<div style="clear:both"></div>-->
-           <!--</div>-->
+    <div class="ui-lightbox ui-widget ui-helper-hidden ui-corner-all ui-shadow"
+         [style.display]="visible ? 'block' : 'none'" [style.zIndex]="zindex"
+         [style.transitionProperty]="'all'" [style.transitionDuration]="effectDuration"
+         [style.transitionTimingFunction]="easing" (click)="preventDocumentClickListener=true">
+      <div class="ui-lightbox-content-wrapper">
+        <!--ui-state-default ui-corner-right-->
+        <a class=" ui-lightbox-nav-left " [style.zIndex]="zindex + 1" (click)="prev(img)"
+           [ngClass]="{'ui-helper-hidden':!leftVisible}"><span class="fa fa-fw fa-caret-left"></span></a>
+        <div #content class="ui-lightbox-content ui-corner-all" #content [ngClass]="{'ui-lightbox-loading': loading}"
+             [style.transitionProperty]="'width,height'" [style.transitionDuration]="effectDuration"
+             [style.transitionTimingFunction]="easing">
+          <img #img [src]="currentImage ? currentImage.source||'' : ''" (load)="onImageLoad($event,content)"
+               style="display:none">
+          <ng-content></ng-content>
         </div>
+        <!--ui-state-default ui-corner-left -->
+        <a class=" ui-lightbox-nav-right ui-helper-hidden" [style.zIndex]="zindex + 1" (click)="next(img)"
+           [ngClass]="{'ui-helper-hidden':!rightVisible}"><span class="fa fa-fw fa-caret-right"></span></a>
+      </div>
+      <!--<div class="ui-lightbox-caption ui-widget-header" [style.display]="captionText ? 'block' : 'none'">-->
+      <!--<span class="ui-lightbox-caption-text">{{captionText}}</span><a class="ui-lightbox-close ui-corner-all" href="#" (click)="hide($event)"><span class="fa fa-fw fa-close"></span></a>-->
+      <!--<div style="clear:both"></div>-->
+      <!--</div>-->
+    </div>
     `,
   providers: [DomHandler]
 })
@@ -48,6 +91,10 @@ export class Lightbox implements AfterViewInit,OnDestroy{
 
   @Input() style: any;
 
+  @Input() width  = 400;
+
+  @Input() height = 240;
+
   @Input() styleClass: string;
 
   @Input() appendTo = 'body';
@@ -55,6 +102,20 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   @Input() easing: 'ease-out';
 
   @Input() effectDuration: any = '500ms';
+
+  @Output() onClickDelete: EventEmitter<any> = new EventEmitter();
+
+  @Output() onClick2Upload: EventEmitter<any> = new EventEmitter();
+
+
+
+  click2upload(event) {
+    this.onClick2Upload.emit(event);
+  }
+
+  click2Delete(image, event) {
+    this.onClickDelete.emit(image)
+  }
 
   public visible: boolean;
 
@@ -85,8 +146,10 @@ export class Lightbox implements AfterViewInit,OnDestroy{
   onImageClick(event,image,i,content) {
     this.index = i;
     this.loading = true;
-    content.style.width = 32 + 'px';
-    content.style.height = 32 + 'px';
+    if (content ) {
+      content.style.width = 32 + 'px';
+      content.style.height = 32 + 'px';
+    }
     this.show();
     this.displayImage(image);
 
@@ -152,6 +215,9 @@ export class Lightbox implements AfterViewInit,OnDestroy{
 
     event.preventDefault();
   }
+
+  @Input()
+  edit: boolean = false;
 
   center() {
     let elementWidth = this.domHandler.getOuterWidth(this.panel);
@@ -242,7 +308,7 @@ export class Lightbox implements AfterViewInit,OnDestroy{
 }
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, UTooltipModule],
   exports: [Lightbox],
   declarations: [Lightbox]
 })
